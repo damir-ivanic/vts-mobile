@@ -1,0 +1,48 @@
+{
+  "general": {
+    "next": "Next",
+    "go": "Go",
+    "ok": "Ok",
+    "no": "No"
+  },
+  "screens": {
+    "truckDetails": "Truck details",
+    "trailerDetails": "Trailer details",
+    "mainMenu": "Main menu",
+    "toll": "Toll",
+    "fuel": "Fuel",
+    "inspection": "Inspection",
+    "vignette": "Vignette"
+  },
+  "details": {
+    "vehicleInfo": "Vehicle info",
+    "next": "Next",
+    "plateNumber": "Plate number",
+    "model": "Model",
+    "currentMileage": "Current mileage",
+    "registrationExpiration": "Registration expiration",
+    "nextService": "Next service date",
+    "lastService": "Last service date"
+  },
+  "inspection": {
+    "tires": "Pneumatici",
+    "electricityLights": "Elektronika/Svetla",
+    "mirrors": "Ogledala",
+    "vehicleExterior": "Spoljašnost vozila",
+    "vehicleInterior": "Unutrašnjost vozila",
+    "additionalEquipment": "Dodatna oprema",
+    "documentation": "Dokumentacija",
+    "remarks": "Primedbe",
+    "proofOfMalfunction": "Dokaz o neispravnosti",
+    "pictureAgain": "Slikaj ponovo"
+  },
+  "mainMenu": {
+    "fuel": "Fuel",
+    "toll": "Toll",
+    "vignette": "Vignette"
+  },
+  "notifications": {
+    "success": "Uspešno",
+    "error": "Greška"
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "general": {
+    "next": "Dalje",
+    "go": "Kreni",
+    "ok": "Ok",
+    "no": "Ne",
+    "save": "Sačuvaj",
+    "takePicture": "Slikaj",
+    "retakePicture": "Slikaj ponovo",
+    "addLocation": "Dodaj lokaciju",
+    "selectItem": "Izaberite opciju"
+  },
+  "login": {
+    "plates": "Unesite registarski broj vozila",
+    "password": "Unesite sifru"
+  },
+  "screens": {
+    "login": "Login",
+    "truckDetails": "Detalji kamiona",
+    "trailerDetails": "Detalji prikolice",
+    "mainMenu": "Glavni meni",
+    "toll": "Putarina",
+    "fuel": "Gorivo",
+    "inspection": "Inspekcija",
+    "vignette": "Vinjeta",
+    "start": "Započnite nalog"
+  },
+  "details": {
+    "vehicleInfo": "Infromacije o vozilu",
+    "trailerInfo": "Infromacije o prikolici",
+    "plateNumber": "Reg. broj",
+    "model": "Model",
+    "currentMileage": "Trenutna kilometraza",
+    "registrationExpiration": "Registracija istice",
+    "nextService": "Sledeci servis",
+    "or": "ili",
+    "lastService": "Poslednji servis"
+  },
+  "forms": {
+    "numberOfValidityDays": "Broj dana vaznosti",
+    "currentDate": "Trenutni datum"
+  },
+  "inspection": {
+    "tires": "Pneumatici",
+    "electricityLights": "Elektronika/Svetla",
+    "mirrors": "Ogledala",
+    "vehicleExterior": "Spoljašnost vozila",
+    "vehicleInterior": "Unutrašnjost vozila",
+    "additionalEquipment": "Dodatna oprema",
+    "documentation": "Dokumentacija",
+    "remarks": "Primedbe",
+    "proofOfMalfunction": "Dokaz o neispravnosti",
+    "pictureAgain": "Slikaj ponovo"
+  },
+  "mainMenu": {
+    "fuel": "Gorivo",
+    "toll": "Putarina",
+    "vignette": "Vinjeta"
+  },
+  "costs": {
+    "paymentMethod": "Način plaćanja",
+    "amount": "Količina"
+  },
+  "validations": {
+    "mandatoryField": "Ovo polje je obavezno",
+    "mandatoryButton": "Ova akcija je obavezna"
+  }
+}
