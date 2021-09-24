@@ -8,6 +8,7 @@ import Navigation from "./navigation";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { extendTheme, NativeBaseProvider } from "native-base";
 import { AuthenticationProvider } from "./hooks/useAuthentication";
+import CameraStateProvider from "./state-providers/CameraStateProvider";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -61,8 +62,10 @@ export default function App() {
         <AuthenticationProvider>
           <QueryClientProvider client={queryClient}>
             <SafeAreaProvider style={tw`p-5`}>
-              <Navigation />
-              <StatusBar />
+              <CameraStateProvider>
+                <Navigation />
+                <StatusBar />
+              </CameraStateProvider>
             </SafeAreaProvider>
           </QueryClientProvider>
         </AuthenticationProvider>

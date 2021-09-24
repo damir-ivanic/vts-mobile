@@ -2,7 +2,7 @@ import React, { FC, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Pressable } from "react-native";
 import { View, Button, Text, TextArea, Checkbox, Icon } from "native-base";
-import Entypo from "@expo/vector-icons/Entypo";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { CameraCapturedPicture } from "expo-camera";
 
 import useToggle from "../../../hooks/useToggle";
@@ -12,9 +12,8 @@ import { InspectionFormFieldValues, InspectionStep } from "../Inspection.types";
 type VehiclePartCheckProps = {
   fieldNameKey: InspectionStep;
   name: string;
-  onCameraClose: () => void;
   onCameraOpen: (step: InspectionStep) => void;
-  pictureData?: CameraCapturedPicture;
+  capturedData?: CameraCapturedPicture;
   selectedValues: InspectionFormFieldValues;
   setFieldValue: (fieldName: string, value: any) => void;
 };
@@ -22,9 +21,8 @@ type VehiclePartCheckProps = {
 const VehiclePartCheck: FC<VehiclePartCheckProps> = ({
   fieldNameKey,
   name,
-  onCameraClose,
   onCameraOpen,
-  pictureData,
+  capturedData,
   selectedValues,
   setFieldValue,
 }) => {
@@ -44,23 +42,22 @@ const VehiclePartCheck: FC<VehiclePartCheckProps> = ({
       toggleSection();
 
       if (!!remark_image) {
-        handleSetFieldValue("image", "");
+        handleSetFieldValue("remark_image", "");
       }
       if (!!remark_comment) {
-        handleSetFieldValue("comment", "");
+        handleSetFieldValue("remark_comment", "");
       }
     }
   };
 
   useEffect(() => {
-    if (pictureData?.base64) {
-      handleSetFieldValue("remark_image", pictureData?.base64);
-      onCameraClose();
+    if (capturedData?.base64) {
+      handleSetFieldValue("remark_image", capturedData?.base64);
     }
-  }, [pictureData]);
+  }, [capturedData]);
 
   return (
-    <View mb={2} p={3} border={1} borderColor="white" borderRadius={4}>
+    <View mb={2} p={3} border={1} borderColor="rgb(202,203,214)" borderRadius={4}>
       <Pressable onPress={toggleSection}>
         <View flexDirection="row">
           <Checkbox
@@ -127,7 +124,7 @@ const VehiclePartCheck: FC<VehiclePartCheckProps> = ({
                       }`
                     )}
                   </Text>
-                  <Icon color="white" as={<Entypo name="camera" />} />
+                  <Icon color="white" as={<MaterialCommunityIcons name={!!remark_image ? "camera-retake" : "camera"} />} />
                 </View>
               </Button>
             </View>

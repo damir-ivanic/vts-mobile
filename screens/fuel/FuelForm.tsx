@@ -1,7 +1,5 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useFormikContext } from "formik";
-import { useFuelType } from "../../api/fuel";
-import { FuelPaymentType, usePaymentType } from "../../api/payment";
 import {
   Input,
   Button,
@@ -14,12 +12,14 @@ import {
   Icon,
 } from "native-base";
 import { Image } from "react-native";
-import { Camera as CameraBase, CameraPictureOptions } from "expo-camera";
-import Camera from "../../components/camera";
-import useToggle from "../../hooks/useToggle";
 import { useTranslation } from "react-i18next";
-import { Entypo } from "@expo/vector-icons";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import * as Location from "expo-location";
+
+import { useCameraState } from "../../state-providers/CameraStateProvider";
+
+import { useFuelType } from "../../api/fuel";
+import { FuelPaymentType, usePaymentType } from "../../api/payment";
 import { SupplierType, useSuppliers } from "../../api/supplierts";
 
 const FuelForm = () => {
@@ -40,23 +40,10 @@ const FuelForm = () => {
 
   const { data: suppliers } = useSuppliers();
 
-  const [loadingLocation, setLoadingLocation] = useState(false);
-  const cameraRef = useRef<CameraBase | null>(null);
-  const [isCameraOpen, toggleCamera] = useToggle();
-  const { t } = useTranslation();
+  const { capturedData, openCamera } = useCameraState();
 
-  const handleTakePicture = async () => {
-    if (cameraRef.current) {
-      try {
-        const options: CameraPictureOptions = { quality: 0.7, base64: true };
-        const data = await cameraRef.current.takePictureAsync(options);
-        setFieldValue("image", data.base64, true);
-        toggleCamera();
-      } catch (error) {
-        // @TODO: Handle error
-      }
-    }
-  };
+  const [loadingLocation, setLoadingLocation] = useState(false);
+  const { t } = useTranslation();
 
   const addLocation = async () => {
     const { status } = await Location.requestForegroundPermissionsAsync();
@@ -78,6 +65,12 @@ const FuelForm = () => {
   const handleCostChange = (value: string) => {
     setFieldValue("cost", Number.parseInt(value), false);
   };
+
+  useEffect(() => {
+    if (capturedData?.base64) {
+      setFieldValue("image", capturedData?.base64);
+    }
+  }, [capturedData]);
 
   return (
     <ScrollView>
@@ -220,7 +213,7 @@ const FuelForm = () => {
         <Button
           mt={2}
           size="sm"
-          onPress={toggleCamera}
+          onPress={openCamera}
           colorScheme="vtsBlue"
           _text={{ color: "white" }}
         >
@@ -228,20 +221,25 @@ const FuelForm = () => {
             <Text color="white" mr={2}>
               {t(`general.${values.image ? "retakePicture" : "takePicture"}`)}
             </Text>
-            <Icon color="white" as={<Entypo name="camera" />} />
+            <Icon
+              color="white"
+              as={
+                <MaterialCommunityIcons
+                  name={values.image ? "camera-retake" : "camera"}
+                />
+              }
+            />
           </View>
         </Button>
       </FormControl>
-      {values.image ? (
-        <>
-          <Image
-            source={{
-              uri: `data:image/jpg;base64,${values.image}`,
-            }}
-            style={{ height: "100%", width: "auto", marginTop: 2 }}
-          />
-        </>
-      ) : null}
+      {values.image && (
+        <Image
+          source={{
+            uri: values.image,
+          }}
+          style={{ height: "100%", width: "auto", marginTop: 2 }}
+        />
+      )}
 
       {values.lat ? (
         <Button
@@ -277,9 +275,6 @@ const FuelForm = () => {
       >
         {t("general.save")}
       </Button>
-      {isCameraOpen && (
-        <Camera ref={cameraRef} onTakePicture={handleTakePicture} />
-      )}
     </ScrollView>
   );
 };
