@@ -68,7 +68,7 @@ const FuelForm = () => {
 
   useEffect(() => {
     if (capturedData?.base64) {
-      setFieldValue("image", capturedData?.base64);
+      setFieldValue("image", capturedData.base64);
     }
   }, [capturedData]);
 
