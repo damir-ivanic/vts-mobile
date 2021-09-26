@@ -1,19 +1,21 @@
 import React, { useState } from "react";
 import { useFormikContext } from "formik";
-import { usePaymentType, VignetteType } from "../../api/payment";
+import { TollType, usePaymentType } from "../../api/payment";
 import * as Location from "expo-location";
 import { Button, CheckIcon, FormControl, Input, Select } from "native-base";
 import { useTranslation } from "react-i18next";
 
-const VignetteForm = () => {
+type RampType = "entry_ramp" | "exit_ramp";
+
+const TollForm = () => {
   const { values, errors, submitForm, handleBlur, setFieldValue } =
-    useFormikContext<VignetteType>();
+    useFormikContext<TollType>();
   const [loadingLocation, setLoadingLocation] = useState(false);
 
   const { data, isError, isLoading } = usePaymentType();
   const { t } = useTranslation();
 
-  const addLocation = async () => {
+  const addLocation = async (rampType: RampType) => {
     const { status } = await Location.requestForegroundPermissionsAsync();
     if (status !== "granted") {
       return;
@@ -21,13 +23,9 @@ const VignetteForm = () => {
     setLoadingLocation(true);
 
     const location = await Location.getCurrentPositionAsync({});
-    setFieldValue("lat", location.coords.latitude, false);
-    setFieldValue("long", location.coords.longitude, false);
+    setFieldValue(`${rampType}_lat`, location.coords.latitude, false);
+    setFieldValue(`${rampType}_long`, location.coords.longitude, false);
     setLoadingLocation(false);
-  };
-
-  const handleValidityChange = (value: string) => {
-    setFieldValue("days_of_validity", Number.parseInt(value), false);
   };
 
   const handleCostChange = (value: string) => {
@@ -75,24 +73,71 @@ const VignetteForm = () => {
           {errors.payment_type_id}
         </FormControl.ErrorMessage>
       </FormControl>
-      <FormControl
-        isRequired
-        isInvalid={"days_of_validity" in errors}
-        marginTop={5}
-      >
-        <FormControl.Label>{t("forms.numberOfValidityDays")}</FormControl.Label>
-        <Input
-          keyboardType="decimal-pad"
-          isDisabled={loadingLocation}
-          onBlur={handleBlur("days_of_validity")}
-          placeholder={t("costs.amount")}
-          onChangeText={handleValidityChange}
-          value={values.days_of_validity?.toString()}
-        />
-        <FormControl.ErrorMessage>
-          {errors.days_of_validity}
-        </FormControl.ErrorMessage>
-      </FormControl>
+
+      {values.entry_ramp_lat ? (
+        <Button
+          width="100%"
+          marginTop={2}
+          colorScheme="vtsGreen"
+          _text={{ color: "white" }}
+          disabled
+        >
+          {t("costs.successfullyAddedCoordinates")}
+        </Button>
+      ) : (
+        <FormControl
+          isRequired
+          isInvalid={"entry_ramp_lat" in errors}
+          marginTop={5}
+        >
+          <FormControl.Label>{t("costs.entryRamp")}</FormControl.Label>
+          <Button
+            width="100%"
+            marginTop={2}
+            onPress={() => addLocation("entry_ramp")}
+            isLoading={loadingLocation}
+            colorScheme="vtsBlue"
+            _text={{ color: "white" }}
+          >
+            {t("general.addLocation")}
+          </Button>
+          <FormControl.ErrorMessage>
+            {errors.entry_ramp_lat}
+          </FormControl.ErrorMessage>
+        </FormControl>
+      )}
+      {values.exit_ramp_lat ? (
+        <Button
+          width="100%"
+          marginTop={2}
+          colorScheme="vtsGreen"
+          _text={{ color: "white" }}
+          disabled
+        >
+          {t("costs.successfullyAddedCoordinates")}
+        </Button>
+      ) : (
+        <FormControl
+          isRequired
+          isInvalid={"exit_ramp_lat" in errors}
+          marginTop={5}
+        >
+          <FormControl.Label>{t("costs.exitRamp")}</FormControl.Label>
+          <Button
+            width="100%"
+            marginTop={2}
+            onPress={() => addLocation("exit_ramp")}
+            isLoading={loadingLocation}
+            colorScheme="vtsBlue"
+            _text={{ color: "white" }}
+          >
+            {t("general.addLocation")}
+          </Button>
+          <FormControl.ErrorMessage>
+            {errors.exit_ramp_lat}
+          </FormControl.ErrorMessage>
+        </FormControl>
+      )}
       <FormControl isRequired isInvalid={"cost" in errors} marginTop={5}>
         <FormControl.Label>Iznos</FormControl.Label>
         <Input
@@ -105,34 +150,9 @@ const VignetteForm = () => {
         />
         <FormControl.ErrorMessage>{errors.cost}</FormControl.ErrorMessage>
       </FormControl>
-      {values.lat ? (
-        <Button
-          width="100%"
-          marginTop={2}
-          colorScheme="vtsGreen"
-          _text={{ color: "white" }}
-          disabled
-        >
-          Lokacija uspesno dodata
-        </Button>
-      ) : (
-        <FormControl isRequired isInvalid={"lat" in errors} marginTop={5}>
-          <Button
-            width="100%"
-            marginTop={2}
-            onPress={addLocation}
-            isLoading={loadingLocation}
-            colorScheme="vtsBlue"
-            _text={{ color: "white" }}
-          >
-            {t("general.addLocation")}
-          </Button>
-          <FormControl.ErrorMessage>{errors.lat}</FormControl.ErrorMessage>
-        </FormControl>
-      )}
       <Button
         width="100%"
-        marginTop={2}
+        marginTop={5}
         onPress={submitForm}
         disabled={loadingLocation}
         colorScheme="vtsBlue"
@@ -144,4 +164,4 @@ const VignetteForm = () => {
   );
 };
 
-export default VignetteForm;
+export default TollForm;

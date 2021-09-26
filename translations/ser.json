@@ -26,8 +26,8 @@
     "start": "Započnite nalog"
   },
   "details": {
-    "vehicleInfo": "Infromacije o vozilu",
-    "trailerInfo": "Infromacije o prikolici",
+    "vehicleInfo": "Informacije o vozilu",
+    "trailerInfo": "Informacije o prikolici",
     "plateNumber": "Reg. broj",
     "model": "Model",
     "currentMileage": "Trenutna kilometraza",
@@ -59,10 +59,16 @@
   },
   "costs": {
     "paymentMethod": "Način plaćanja",
-    "amount": "Količina"
+    "amount": "Količina",
+    "entryRamp": "Dodaj ulaznu rampu",
+    "exitRamp": "Dodaj izlaznu rampu",
+    "successfullyAddedCoordinates": "Lokacija uspesno dodata"
   },
   "validations": {
     "mandatoryField": "Ovo polje je obavezno",
     "mandatoryButton": "Ova akcija je obavezna"
+  },
+  "errorPage": {
+    "explanation": "Došlo je do greške, povucite ekran ka dole da osvežite stranicu."
   }
 }

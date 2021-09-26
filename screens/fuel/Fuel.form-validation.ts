@@ -7,6 +7,7 @@ export const fuelSchema = Yup.object().shape({
   mileage: Yup.number().required(),
   litres: Yup.number().required(),
   cost: Yup.number().required(),
-  location: Yup.string().required(),
+  lat: Yup.string().required(),
+  long: Yup.string().required(),
   image: Yup.string().required(),
 });

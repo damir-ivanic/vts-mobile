@@ -31,6 +31,7 @@ export function AuthenticationProvider({ children }: { children: ReactNode }) {
     const tokenAsync = async () => {
       try {
         const token = await AsyncStorage.getItem("token");
+        await AsyncStorage.removeItem("token");
 
         if (token) {
           const { data } = await checkForActiveWarrant(token);

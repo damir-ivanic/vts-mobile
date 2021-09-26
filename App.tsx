@@ -1,7 +1,5 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { SafeAreaProvider } from "react-native-safe-area-context";
-import tw from "./helpers/tailwind";
 import "./i18n";
 import useCachedResources from "./hooks/useCachedResources";
 import Navigation from "./navigation";
@@ -9,6 +7,8 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { extendTheme, NativeBaseProvider } from "native-base";
 import { AuthenticationProvider } from "./hooks/useAuthentication";
 import CameraStateProvider from "./state-providers/CameraStateProvider";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import tw from "./helpers/tailwind";
 
 const queryClient = new QueryClient({
   defaultOptions: {

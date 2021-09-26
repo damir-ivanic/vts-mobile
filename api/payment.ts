@@ -1,6 +1,5 @@
 import { AxiosError } from "axios";
 import { useToast } from "native-base";
-import { useTranslation } from "react-i18next";
 import { useMutation, useQuery } from "react-query";
 import { request } from "./api";
 
@@ -22,13 +21,12 @@ export type FuelPaymentType = {
 };
 
 export type TollType = {
-  payment_type_id: number;
-  entry_ramp_long: number;
-  entry_ramp_lat: number;
-  exit_ramp_long: number;
-  exit_ramp_lat: number;
-  cost: number;
-  countryId: number;
+  payment_type_id?: number;
+  entry_ramp_long?: number;
+  entry_ramp_lat?: number;
+  exit_ramp_long?: number;
+  exit_ramp_lat?: number;
+  cost?: string;
 };
 
 export type VignetteType = {
@@ -50,10 +48,12 @@ export function usePaymentType() {
 
 export function useCosts(costType: string) {
   const toast = useToast();
-  const { t } = useTranslation();
+
   return useMutation(
-    (costForm: CostType) =>
-      request.post<CostType>(`costs/add/${costType}`, costForm),
+    (costForm: CostType) => {
+      console.log(costForm);
+      return request.post<CostType>(`costs/add/${costType}`, costForm);
+    },
     {
       async onSuccess() {
         toast.show({
@@ -61,7 +61,8 @@ export function useCosts(costType: string) {
           placement: "top",
         });
       },
-      onError() {
+      onError(e: AxiosError) {
+        console.log(e.response);
         toast.show({
           placement: "top",
           status: "error",

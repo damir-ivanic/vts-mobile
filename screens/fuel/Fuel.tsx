@@ -13,14 +13,16 @@ const initialValues = {
   mileage: undefined,
   litres: undefined,
   cost: undefined,
-  location: undefined,
+  lat: undefined,
+  long: undefined,
   image: undefined,
 };
 
 const Fuel = ({ navigation }: RootTabScreenProps<"Fuel">) => {
-  const { mutate, isSuccess } = useCosts("1");
+  const { mutate, isSuccess, error } = useCosts("1");
 
   const handleSubmit = (value: FuelPaymentType) => {
+    console.log(value);
     mutate(value);
     if (isSuccess) {
       navigation.navigate("MainMenu");

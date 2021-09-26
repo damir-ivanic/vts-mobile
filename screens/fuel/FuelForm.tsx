@@ -8,8 +8,8 @@ import {
   CheckIcon,
   View,
   Text,
-  ScrollView,
   Icon,
+  ScrollView,
 } from "native-base";
 import { Image } from "react-native";
 import { useTranslation } from "react-i18next";
@@ -32,11 +32,7 @@ const FuelForm = () => {
     setFieldValue,
   } = useFormikContext<FuelPaymentType>();
   const { data, isError, isLoading } = usePaymentType();
-  const {
-    data: fuelType,
-    isError: isFuelTypeError,
-    isLoading: isFuelTypeLoading,
-  } = useFuelType();
+  const { data: fuelType } = useFuelType();
 
   const { data: suppliers } = useSuppliers();
 
@@ -110,52 +106,20 @@ const FuelForm = () => {
           </FormControl.ErrorMessage>
         ) : null}
       </FormControl>
-      {/* <FormControl isRequired isInvalid={"fuel_type_id" in errors}>
-        <FormControl.Label>Select Item</FormControl.Label>
-        {fuelType ? (
-          <Select
-            isDisabled={isFuelTypeError || isFuelTypeLoading}
-            selectedValue={values.fuel_type_id?.toString()}
-            accessibilityLabel="Tip goriva"
-            placeholder="Tip goriva"
-            onValueChange={(itemValue) => {
-              setFieldValue(
-                "payment_type_id",
-                Number.parseInt(itemValue),
-                false
-              );
-            }}
-            _selectedItem={{
-              bg: "teal.600",
-              endIcon: <CheckIcon size={5} />,
-            }}
-            mt={1}
-          >
-            {data?.map((paymentType: any) => (
-              <Select.Item
-                key={paymentType.id}
-                label={paymentType.name}
-                value={paymentType.id.toString()}
-              />
-            ))}
-          </Select>
-        ) : null}
-        {errors.fuel_type_id ? (
-          <FormControl.ErrorMessage>
-            {errors.fuel_type_id}.
-          </FormControl.ErrorMessage>
-        ) : null}
-      </FormControl> */}
+      <FormControl>
+        <FormControl.Label>Vrsta goriva</FormControl.Label>
+        <Input isDisabled value={fuelType?.fuel_type} />
+      </FormControl>
+
       <FormControl isRequired isInvalid={"supplier" in errors} marginTop={5}>
         <FormControl.Label>Select Item</FormControl.Label>
         {suppliers ? (
           <Select
-            isDisabled={isFuelTypeError || isFuelTypeLoading}
             selectedValue={values.supplier?.toString()}
             accessibilityLabel="Supplieri"
             placeholder="Supplieri"
             onValueChange={(itemValue) => {
-              setFieldValue("suppliers", Number.parseInt(itemValue), false);
+              setFieldValue("supplier", Number.parseInt(itemValue), false);
             }}
             _selectedItem={{
               bg: "teal.600",

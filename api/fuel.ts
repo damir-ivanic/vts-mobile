@@ -9,7 +9,7 @@ type FuelType = {
 
 export function useFuelType() {
   return useQuery("fuel-type", async () => {
-    const { data } = await request.get<FuelType[]>(`fuel-type`);
-    return data;
+    const { data } = await request.get<FuelType>(`fuel-type`);
+    return data.data;
   });
 }

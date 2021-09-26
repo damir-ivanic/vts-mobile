@@ -4,13 +4,14 @@ import { useTranslation } from "react-i18next";
 import { Image } from "react-native";
 import { useTrailer } from "../../api/truck";
 import Container from "../../components/container/Container";
+import ErrorPage from "../../components/error/ErroPage";
 import LoadingScreen from "../../components/loading/LoadingScreen";
 import { RootTabScreenProps } from "../../types";
 
 export default function TrailerDetails({
   navigation,
 }: RootTabScreenProps<"TrailerDetails">) {
-  const { data, isLoading } = useTrailer();
+  const { data, isLoading, isError } = useTrailer();
   const { t } = useTranslation();
 
   const confirm = () => {
@@ -19,6 +20,10 @@ export default function TrailerDetails({
 
   if (isLoading) {
     return <LoadingScreen />;
+  }
+
+  if (isError) {
+    return <ErrorPage />;
   }
 
   return (

@@ -1,18 +1,22 @@
 import * as React from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { useTranslation } from "react-i18next";
+import { Text, View } from "react-native";
+import Container from "../container/Container";
 
-type ErrorPageType = {
-  navigation: any;
-  route: string;
-};
-
-export default function ErrorPage({ navigation, route }: ErrorPageType) {
+export default function ErrorPage() {
+  const { t } = useTranslation();
   return (
-    <View>
-      <Text>Doslo je do greske, vratite se na Home screen</Text>
-      <TouchableOpacity onPress={() => navigation.replace(route)}>
-        <Text>Home</Text>
-      </TouchableOpacity>
-    </View>
+    <Container>
+      <View
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          marginTop: 40,
+        }}
+      >
+        <Text>{t("errorPage.explanation")}</Text>
+      </View>
+    </Container>
   );
 }

@@ -8,7 +8,6 @@ const StartForm = () => {
   const { values, errors, submitForm, handleBlur, handleChange, isValid } =
     useFormikContext<StartType>();
   const { t } = useTranslation();
-  console.log(isValid, errors);
 
   return (
     <View width="100%">

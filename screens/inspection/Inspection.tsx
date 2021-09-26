@@ -1,5 +1,4 @@
-import React, { FC } from "react";
-import { Container } from "native-base";
+import React from "react";
 import { Formik, FormikHelpers } from "formik";
 
 import InspectionForm from "./InspectionForm";
@@ -8,6 +7,7 @@ import { inspectionSchema } from "./Inspection.form-validation";
 import { request } from "../../api/api";
 import { InspectionFormValues } from "./Inspection.types";
 import { RootTabScreenProps } from "../../types";
+import Container from "../../components/container/Container";
 
 const Inspection = ({ navigation }: RootTabScreenProps<"Inspection">) => {
   const handleSubmit = async (
@@ -26,7 +26,7 @@ const Inspection = ({ navigation }: RootTabScreenProps<"Inspection">) => {
   };
 
   return (
-    <Container p={2} minWidth="100%">
+    <Container>
       <Formik
         onSubmit={handleSubmit}
         initialValues={initialValues}

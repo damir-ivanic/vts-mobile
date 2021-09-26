@@ -1,16 +1,17 @@
 import { Text, Heading, Button, Box } from "native-base";
 import * as React from "react";
 import { useTranslation } from "react-i18next";
-import { Image } from "react-native";
+import { Image, Dimensions } from "react-native";
 import { useTruck } from "../../api/truck";
 import Container from "../../components/container/Container";
+import ErrorPage from "../../components/error/ErroPage";
 import LoadingScreen from "../../components/loading/LoadingScreen";
 import { RootTabScreenProps } from "../../types";
 
 export default function TruckDetails({
   navigation,
 }: RootTabScreenProps<"TruckDetails">) {
-  const { data, isLoading, isError, refetch } = useTruck();
+  const { data, isLoading, isError } = useTruck();
   const { t } = useTranslation();
 
   const confirm = () => {
@@ -22,7 +23,7 @@ export default function TruckDetails({
   }
 
   if (isError) {
-    refetch();
+    return <ErrorPage />;
   }
 
   return (
@@ -40,7 +41,7 @@ export default function TruckDetails({
       {data?.image ? (
         <Image
           style={{
-            width: "100%",
+            maxWidth: Dimensions.get("screen").width - 20,
             height: 200,
             marginBottom: 5,
             marginTop: 5,

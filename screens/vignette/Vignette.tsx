@@ -1,6 +1,5 @@
 import { Formik } from "formik";
 import React from "react";
-import { useTranslation } from "react-i18next";
 import { useCosts, VignetteType } from "../../api/payment";
 import Container from "../../components/container/Container";
 import { RootTabScreenProps } from "../../types";
