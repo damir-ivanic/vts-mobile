@@ -58,8 +58,7 @@ const CameraUi = forwardRef<CameraBase | null, CameraUiProps>(
 
 const styles = StyleSheet.create({
   cameraContainer: {
-    width: "92%",
-    height: "90%",
+    width: "100%"
   },
   ctaTopContainer: {
     flexDirection: "row",

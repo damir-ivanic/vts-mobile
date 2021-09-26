@@ -55,20 +55,20 @@ export default function App() {
 
   if (!isLoadingComplete) {
     return null;
-  } else {
-    return (
-      <NativeBaseProvider theme={theme}>
-        <AuthenticationProvider>
-          <QueryClientProvider client={queryClient}>
-            <SafeAreaProvider>
-              <CameraStateProvider>
-                <Navigation />
-                <StatusBar />
-              </CameraStateProvider>
-            </SafeAreaProvider>
-          </QueryClientProvider>
-        </AuthenticationProvider>
-      </NativeBaseProvider>
-    );
   }
+
+  return (
+    <NativeBaseProvider theme={theme}>
+      <AuthenticationProvider>
+        <QueryClientProvider client={queryClient}>
+          <SafeAreaProvider>
+            <CameraStateProvider>
+              <Navigation />
+              <StatusBar />
+            </CameraStateProvider>
+          </SafeAreaProvider>
+        </QueryClientProvider>
+      </AuthenticationProvider>
+    </NativeBaseProvider>
+  );
 }
