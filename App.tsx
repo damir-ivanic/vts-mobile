@@ -8,7 +8,6 @@ import { extendTheme, NativeBaseProvider } from "native-base";
 import { AuthenticationProvider } from "./hooks/useAuthentication";
 import CameraStateProvider from "./state-providers/CameraStateProvider";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import tw from "./helpers/tailwind";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -61,7 +60,7 @@ export default function App() {
       <NativeBaseProvider theme={theme}>
         <AuthenticationProvider>
           <QueryClientProvider client={queryClient}>
-            <SafeAreaProvider style={tw`p-5`}>
+            <SafeAreaProvider>
               <CameraStateProvider>
                 <Navigation />
                 <StatusBar />

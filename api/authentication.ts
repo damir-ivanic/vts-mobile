@@ -1,6 +1,6 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AxiosError } from "axios";
 import { useMutation } from "react-query";
+import { useAuthentication } from "../hooks/useAuthentication";
 import { request } from "./api";
 
 export type LoginType = {
@@ -8,13 +8,13 @@ export type LoginType = {
   password?: string;
 };
 
-export function useLogin(navigation: any) {
+export function useLogin() {
+  const { setToken } = useAuthentication();
   return useMutation(
     (login: LoginType) => request.post<string>("login", login),
     {
       async onSuccess(response) {
-        await AsyncStorage.setItem("token", response.data);
-        navigation.navigate("TruckDetails");
+        setToken(response.data);
       },
       onError(error: AxiosError) {},
     }

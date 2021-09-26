@@ -57,7 +57,13 @@ const VehiclePartCheck: FC<VehiclePartCheckProps> = ({
   }, [capturedData]);
 
   return (
-    <View mb={2} p={3} border={1} borderColor="rgb(202,203,214)" borderRadius={4}>
+    <View
+      mb={2}
+      p={3}
+      border={1}
+      borderColor="rgb(202,203,214)"
+      borderRadius={4}
+    >
       <Pressable onPress={toggleSection}>
         <View flexDirection="row">
           <Checkbox
@@ -107,7 +113,6 @@ const VehiclePartCheck: FC<VehiclePartCheckProps> = ({
                 }
                 value={remark_comment}
                 placeholder={t("inspection.remarks")}
-
               />
               <Button
                 mt={2}
@@ -124,7 +129,14 @@ const VehiclePartCheck: FC<VehiclePartCheckProps> = ({
                       }`
                     )}
                   </Text>
-                  <Icon color="white" as={<MaterialCommunityIcons name={!!remark_image ? "camera-retake" : "camera"} />} />
+                  <Icon
+                    color="white"
+                    as={
+                      <MaterialCommunityIcons
+                        name={!!remark_image ? "camera-retake" : "camera"}
+                      />
+                    }
+                  />
                 </View>
               </Button>
             </View>

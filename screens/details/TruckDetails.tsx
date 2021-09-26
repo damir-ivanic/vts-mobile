@@ -11,7 +11,7 @@ import { RootTabScreenProps } from "../../types";
 export default function TruckDetails({
   navigation,
 }: RootTabScreenProps<"TruckDetails">) {
-  const { data, isLoading, isError } = useTruck();
+  const { data, isLoading, isError, error } = useTruck();
   const { t } = useTranslation();
 
   const confirm = () => {

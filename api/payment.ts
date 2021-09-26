@@ -11,12 +11,12 @@ type PaymentType = {
 export type FuelPaymentType = {
   fuel_type_id?: number;
   payment_type_id?: number;
-  supplier?: string;
+  supplier?: number;
   mileage?: number;
   litres?: number;
   cost?: number;
-  long?: string;
-  lat?: string;
+  long?: number;
+  lat?: number;
   image?: string;
 };
 
@@ -26,7 +26,7 @@ export type TollType = {
   entry_ramp_lat?: number;
   exit_ramp_long?: number;
   exit_ramp_lat?: number;
-  cost?: string;
+  cost?: number;
 };
 
 export type VignetteType = {
@@ -51,7 +51,6 @@ export function useCosts(costType: string) {
 
   return useMutation(
     (costForm: CostType) => {
-      console.log(costForm);
       return request.post<CostType>(`costs/add/${costType}`, costForm);
     },
     {
@@ -62,7 +61,6 @@ export function useCosts(costType: string) {
         });
       },
       onError(e: AxiosError) {
-        console.log(e.response);
         toast.show({
           placement: "top",
           status: "error",

@@ -18,6 +18,7 @@ import {
 } from "./CameraStateProvider.types";
 import { cameraPictureOptions } from "./CameraStateProvider.constants";
 import CameraUi from "./CameraUi";
+import { Keyboard } from "react-native";
 
 export const CameraContext = createContext<CameraContextProps | undefined>(
   undefined
@@ -43,6 +44,7 @@ const CameraStateProvider: VFC<CameraStateProviderProps> = ({ children }) => {
   const [capturedData, setCapturedData] = useState<CameraCapturedPicture>();
 
   const handleOpenCamera = useCallback(async () => {
+    Keyboard.dismiss();
     try {
       const { status } = await CameraBase.requestCameraPermissionsAsync();
 
@@ -56,7 +58,6 @@ const CameraStateProvider: VFC<CameraStateProviderProps> = ({ children }) => {
   const handleRetakePicture = useCallback(async () => {
     try {
       await cameraRef.current!.resumePreview();
-
       setPreviewingPicture(false);
       setCapturedData(undefined);
     } catch (error) {

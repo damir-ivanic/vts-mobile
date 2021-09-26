@@ -18,6 +18,7 @@ const initialState: AuthState = {
 
 type AuthContextValue = {
   state: AuthState;
+  setToken: (token: string) => void;
 };
 
 const AuthenticationContext = createContext<AuthContextValue>(
@@ -31,7 +32,6 @@ export function AuthenticationProvider({ children }: { children: ReactNode }) {
     const tokenAsync = async () => {
       try {
         const token = await AsyncStorage.getItem("token");
-        await AsyncStorage.removeItem("token");
 
         if (token) {
           const { data } = await checkForActiveWarrant(token);
@@ -56,8 +56,17 @@ export function AuthenticationProvider({ children }: { children: ReactNode }) {
     tokenAsync();
   }, []);
 
+  const setToken = async (token: string) => {
+    setTokenHeader(token);
+    await AsyncStorage.setItem("token", token);
+    updateState((draft) => {
+      draft.token = token;
+    });
+  };
+
   const context = {
     state,
+    setToken,
   };
 
   return (

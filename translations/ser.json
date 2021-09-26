@@ -8,11 +8,12 @@
     "takePicture": "Slikaj",
     "retakePicture": "Slikaj ponovo",
     "addLocation": "Dodaj lokaciju",
-    "selectItem": "Izaberite opciju"
+    "selectItem": "Izaberite opciju",
+    "mileage": "Kilometraža"
   },
   "login": {
     "plates": "Unesite registarski broj vozila",
-    "password": "Unesite sifru"
+    "password": "Unesite šifru"
   },
   "screens": {
     "login": "Login",
@@ -30,14 +31,14 @@
     "trailerInfo": "Informacije o prikolici",
     "plateNumber": "Reg. broj",
     "model": "Model",
-    "currentMileage": "Trenutna kilometraza",
-    "registrationExpiration": "Registracija istice",
-    "nextService": "Sledeci servis",
-    "or": "ili",
+    "currentMileage": "Trenutna kilometraža",
+    "registrationExpiration": "Registracija ističe",
+    "nextService": "Sledeći servis",
+    "or": " ili",
     "lastService": "Poslednji servis"
   },
   "forms": {
-    "numberOfValidityDays": "Broj dana vaznosti",
+    "numberOfValidityDays": "Broj dana važnosti",
     "currentDate": "Trenutni datum"
   },
   "inspection": {
@@ -60,9 +61,10 @@
   "costs": {
     "paymentMethod": "Način plaćanja",
     "amount": "Količina",
+    "price": "Cena",
     "entryRamp": "Dodaj ulaznu rampu",
     "exitRamp": "Dodaj izlaznu rampu",
-    "successfullyAddedCoordinates": "Lokacija uspesno dodata"
+    "successfullyAddedCoordinates": "Lokacija uspešno dodata"
   },
   "validations": {
     "mandatoryField": "Ovo polje je obavezno",

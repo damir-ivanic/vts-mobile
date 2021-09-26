@@ -3,7 +3,6 @@ import { Formik } from "formik";
 import { FuelPaymentType, useCosts } from "../../api/payment";
 import { fuelSchema } from "./Fuel.form-validation";
 import FuelForm from "./FuelForm";
-import Container from "../../components/container/Container";
 import { RootTabScreenProps } from "../../types";
 
 const initialValues = {
@@ -21,8 +20,9 @@ const initialValues = {
 const Fuel = ({ navigation }: RootTabScreenProps<"Fuel">) => {
   const { mutate, isSuccess, error } = useCosts("1");
 
+  console.log(error?.response);
+
   const handleSubmit = (value: FuelPaymentType) => {
-    console.log(value);
     mutate(value);
     if (isSuccess) {
       navigation.navigate("MainMenu");
@@ -30,15 +30,13 @@ const Fuel = ({ navigation }: RootTabScreenProps<"Fuel">) => {
   };
 
   return (
-    <Container>
-      <Formik
-        onSubmit={handleSubmit}
-        initialValues={initialValues}
-        validationSchema={fuelSchema}
-      >
-        <FuelForm />
-      </Formik>
-    </Container>
+    <Formik
+      onSubmit={handleSubmit}
+      initialValues={initialValues}
+      validationSchema={fuelSchema}
+    >
+      <FuelForm />
+    </Formik>
   );
 };
 

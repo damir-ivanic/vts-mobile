@@ -2,13 +2,21 @@ import React, { useState } from "react";
 import { useFormikContext } from "formik";
 import { TollType, usePaymentType } from "../../api/payment";
 import * as Location from "expo-location";
-import { Button, CheckIcon, FormControl, Input, Select } from "native-base";
+import {
+  Button,
+  CheckIcon,
+  FormControl,
+  Input,
+  KeyboardAvoidingView,
+  Select,
+} from "native-base";
 import { useTranslation } from "react-i18next";
+import { Platform } from "react-native";
 
 type RampType = "entry_ramp" | "exit_ramp";
 
 const TollForm = () => {
-  const { values, errors, submitForm, handleBlur, setFieldValue } =
+  const { values, errors, submitForm, setFieldValue, handleChange } =
     useFormikContext<TollType>();
   const [loadingLocation, setLoadingLocation] = useState(false);
 
@@ -28,12 +36,10 @@ const TollForm = () => {
     setLoadingLocation(false);
   };
 
-  const handleCostChange = (value: string) => {
-    setFieldValue("cost", Number.parseInt(value), false);
-  };
-
   return (
-    <>
+    <KeyboardAvoidingView
+      behavior={Platform.OS == "ios" ? "padding" : "height"}
+    >
       <FormControl
         isRequired
         isDisabled={loadingLocation}
@@ -142,10 +148,11 @@ const TollForm = () => {
         <FormControl.Label>Iznos</FormControl.Label>
         <Input
           isDisabled={loadingLocation}
-          keyboardType="number-pad"
-          onBlur={handleBlur("cost")}
+          keyboardType={
+            Platform.OS === "ios" ? "numbers-and-punctuation" : "number-pad"
+          }
           placeholder={t("costs.amount")}
-          onChangeText={handleCostChange}
+          onChangeText={handleChange("cost")}
           value={values.cost?.toString()}
         />
         <FormControl.ErrorMessage>{errors.cost}</FormControl.ErrorMessage>
@@ -160,7 +167,7 @@ const TollForm = () => {
       >
         {t("general.save")}
       </Button>
-    </>
+    </KeyboardAvoidingView>
   );
 };
 

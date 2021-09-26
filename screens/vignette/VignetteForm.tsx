@@ -1,46 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { useFormikContext } from "formik";
 import { usePaymentType, VignetteType } from "../../api/payment";
-import * as Location from "expo-location";
 import { Button, CheckIcon, FormControl, Input, Select } from "native-base";
 import { useTranslation } from "react-i18next";
+import useGeoLocation from "../../hooks/useGeoLocation";
+import LoadingScreen from "../../components/loading/LoadingScreen";
+import { Platform } from "react-native";
 
 const VignetteForm = () => {
-  const { values, errors, submitForm, handleBlur, setFieldValue } =
-    useFormikContext<VignetteType>();
-  const [loadingLocation, setLoadingLocation] = useState(false);
-
+  const {
+    values,
+    errors,
+    submitForm,
+    handleBlur,
+    setFieldValue,
+    handleChange,
+  } = useFormikContext<VignetteType>();
+  const { lat, long, loading } = useGeoLocation();
   const { data, isError, isLoading } = usePaymentType();
   const { t } = useTranslation();
 
-  const addLocation = async () => {
-    const { status } = await Location.requestForegroundPermissionsAsync();
-    if (status !== "granted") {
-      return;
-    }
-    setLoadingLocation(true);
+  useEffect(() => {
+    setFieldValue("lat", lat, false);
+    setFieldValue("long", long, false);
+  }, [lat, long]);
 
-    const location = await Location.getCurrentPositionAsync({});
-    setFieldValue("lat", location.coords.latitude, false);
-    setFieldValue("long", location.coords.longitude, false);
-    setLoadingLocation(false);
-  };
-
-  const handleValidityChange = (value: string) => {
-    setFieldValue("days_of_validity", Number.parseInt(value), false);
-  };
-
-  const handleCostChange = (value: string) => {
-    setFieldValue("cost", Number.parseInt(value), false);
-  };
+  if (isLoading || loading) {
+    return <LoadingScreen />;
+  }
 
   return (
     <>
-      <FormControl
-        isRequired
-        isDisabled={loadingLocation}
-        isInvalid={"payment_type_id" in errors}
-      >
+      <FormControl isInvalid={"payment_type_id" in errors}>
         <FormControl.Label>{t("general.selectItem")}</FormControl.Label>
         {data ? (
           <Select
@@ -52,7 +43,7 @@ const VignetteForm = () => {
               setFieldValue(
                 "payment_type_id",
                 Number.parseInt(itemValue),
-                false
+                true
               );
             }}
             _selectedItem={{
@@ -82,11 +73,10 @@ const VignetteForm = () => {
       >
         <FormControl.Label>{t("forms.numberOfValidityDays")}</FormControl.Label>
         <Input
-          keyboardType="decimal-pad"
-          isDisabled={loadingLocation}
+          keyboardType="number-pad"
           onBlur={handleBlur("days_of_validity")}
           placeholder={t("costs.amount")}
-          onChangeText={handleValidityChange}
+          onChangeText={handleChange("days_of_validity")}
           value={values.days_of_validity?.toString()}
         />
         <FormControl.ErrorMessage>
@@ -96,45 +86,19 @@ const VignetteForm = () => {
       <FormControl isRequired isInvalid={"cost" in errors} marginTop={5}>
         <FormControl.Label>Iznos</FormControl.Label>
         <Input
-          isDisabled={loadingLocation}
-          keyboardType="number-pad"
-          onBlur={handleBlur("cost")}
+          keyboardType={
+            Platform.OS === "ios" ? "numbers-and-punctuation" : "number-pad"
+          }
           placeholder={t("costs.amount")}
-          onChangeText={handleCostChange}
+          onChangeText={handleChange("cost")}
           value={values.cost?.toString()}
         />
         <FormControl.ErrorMessage>{errors.cost}</FormControl.ErrorMessage>
       </FormControl>
-      {values.lat ? (
-        <Button
-          width="100%"
-          marginTop={2}
-          colorScheme="vtsGreen"
-          _text={{ color: "white" }}
-          disabled
-        >
-          Lokacija uspesno dodata
-        </Button>
-      ) : (
-        <FormControl isRequired isInvalid={"lat" in errors} marginTop={5}>
-          <Button
-            width="100%"
-            marginTop={2}
-            onPress={addLocation}
-            isLoading={loadingLocation}
-            colorScheme="vtsBlue"
-            _text={{ color: "white" }}
-          >
-            {t("general.addLocation")}
-          </Button>
-          <FormControl.ErrorMessage>{errors.lat}</FormControl.ErrorMessage>
-        </FormControl>
-      )}
       <Button
         width="100%"
         marginTop={2}
         onPress={submitForm}
-        disabled={loadingLocation}
         colorScheme="vtsBlue"
         _text={{ color: "white" }}
       >

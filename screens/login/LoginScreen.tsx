@@ -12,8 +12,8 @@ const initialValues = {
   password: "",
 };
 
-const LoginScreen = ({ navigation }: RootTabScreenProps<"LoginScreen">) => {
-  const { mutate, isLoading } = useLogin(navigation);
+const LoginScreen = () => {
+  const { mutate, isLoading } = useLogin();
 
   const handleSubmit = (values: LoginType) => {
     mutate(values);

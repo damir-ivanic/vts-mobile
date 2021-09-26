@@ -84,7 +84,7 @@ const routes = [
 ];
 
 const inspectionRoutes = [...inspection, ...routes];
-const authROutes = [login, ...inspectionRoutes];
+const authROutes = [login];
 
 const Stack = createNativeStackNavigator();
 
@@ -110,6 +110,9 @@ function RootNavigator() {
                 key={route.name}
                 name={route.name}
                 component={route.component}
+                options={{
+                  title: t(`screens.${route.header}`),
+                }}
               />
             ))
           : inspectionRoutes.map((route) => (
@@ -128,6 +131,9 @@ function RootNavigator() {
               key={route.name}
               name={route.name}
               component={route.component}
+              options={{
+                title: t(`screens.${route.header}`),
+              }}
             />
           ))}
     </Stack.Navigator>

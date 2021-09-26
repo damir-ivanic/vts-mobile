@@ -11,7 +11,7 @@ import { RootTabScreenProps } from "../../types";
 export default function TrailerDetails({
   navigation,
 }: RootTabScreenProps<"TrailerDetails">) {
-  const { data, isLoading, isError } = useTrailer();
+  const { data, isLoading, isError, error } = useTrailer();
   const { t } = useTranslation();
 
   const confirm = () => {
@@ -21,6 +21,8 @@ export default function TrailerDetails({
   if (isLoading) {
     return <LoadingScreen />;
   }
+
+
 
   if (isError) {
     return <ErrorPage />;
