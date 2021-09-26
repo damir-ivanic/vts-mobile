@@ -6,6 +6,8 @@ import { useTranslation } from "react-i18next";
 import useGeoLocation from "../../hooks/useGeoLocation";
 import LoadingScreen from "../../components/loading/LoadingScreen";
 import { Platform } from "react-native";
+import { useContries } from "../../api/countries";
+import ErrorPage from "../../components/error/ErroPage";
 
 const VignetteForm = () => {
   const {
@@ -17,16 +19,27 @@ const VignetteForm = () => {
     handleChange,
   } = useFormikContext<VignetteType>();
   const { lat, long, loading } = useGeoLocation();
+  const {
+    data: countries,
+    isLoading: countriesLoading,
+    isError: countriesError,
+  } = useContries();
   const { data, isError, isLoading } = usePaymentType();
   const { t } = useTranslation();
+
+  console.log(countries);
 
   useEffect(() => {
     setFieldValue("lat", lat, false);
     setFieldValue("long", long, false);
   }, [lat, long]);
 
-  if (isLoading || loading) {
+  if (isLoading || loading || countriesLoading) {
     return <LoadingScreen />;
+  }
+
+  if (isError || countriesError) {
+    return <ErrorPage />;
   }
 
   return (

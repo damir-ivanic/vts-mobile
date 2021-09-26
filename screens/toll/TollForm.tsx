@@ -2,14 +2,7 @@ import React, { useState } from "react";
 import { useFormikContext } from "formik";
 import { TollType, usePaymentType } from "../../api/payment";
 import * as Location from "expo-location";
-import {
-  Button,
-  CheckIcon,
-  FormControl,
-  Input,
-  KeyboardAvoidingView,
-  Select,
-} from "native-base";
+import { Button, CheckIcon, FormControl, Input, Select } from "native-base";
 import { useTranslation } from "react-i18next";
 import { Platform } from "react-native";
 
@@ -30,18 +23,21 @@ const TollForm = () => {
     }
     setLoadingLocation(true);
 
-    const location = await Location.getCurrentPositionAsync({});
-    setFieldValue(`${rampType}_lat`, location.coords.latitude, false);
-    setFieldValue(`${rampType}_long`, location.coords.longitude, false);
-    setLoadingLocation(false);
+    try {
+      const location = await Location.getCurrentPositionAsync({});
+      console.log(location);
+
+      setFieldValue(`${rampType}_lat`, location.coords.latitude, false);
+      setFieldValue(`${rampType}_long`, location.coords.longitude, false);
+      setLoadingLocation(false);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS == "ios" ? "padding" : "height"}
-    >
+    <>
       <FormControl
-        isRequired
         isDisabled={loadingLocation}
         isInvalid={"payment_type_id" in errors}
       >
@@ -167,7 +163,7 @@ const TollForm = () => {
       >
         {t("general.save")}
       </Button>
-    </KeyboardAvoidingView>
+    </>
   );
 };
 

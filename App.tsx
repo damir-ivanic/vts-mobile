@@ -34,15 +34,15 @@ const theme = extendTheme({
     },
     vtsBlue: {
       500: "#4e73df",
-      700: "#4e73df",
+      700: "#3e5cb2",
     },
     vtsGreen: {
       500: "#1cc88a",
-      700: "#1cc88a",
+      700: "#16a06e",
     },
     vtsRed: {
       500: "#e74a3b",
-      700: "#e74a3b",
+      700: "#ec6e62",
     },
   },
   config: {
