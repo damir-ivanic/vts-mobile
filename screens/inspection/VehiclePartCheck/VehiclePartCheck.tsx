@@ -28,7 +28,7 @@ const VehiclePartCheck: FC<VehiclePartCheckProps> = ({
 }) => {
   const { t } = useTranslation();
 
-  const { valid, remark_comment, remark_image } = selectedValues;
+  const { valid, remark_comment: remarkComment, remark_image: remarkImage } = selectedValues;
 
   const [isSectionOpen, toggleSection] = useToggle();
 
@@ -41,10 +41,10 @@ const VehiclePartCheck: FC<VehiclePartCheckProps> = ({
     if (value) {
       toggleSection();
 
-      if (!!remark_image) {
+      if (!!remarkImage) {
         handleSetFieldValue("remark_image", "");
       }
-      if (!!remark_comment) {
+      if (!!remarkComment) {
         handleSetFieldValue("remark_comment", "");
       }
     }
@@ -52,7 +52,7 @@ const VehiclePartCheck: FC<VehiclePartCheckProps> = ({
 
   useEffect(() => {
     if (capturedData?.base64) {
-      handleSetFieldValue("remark_image", capturedData?.base64);
+      handleSetFieldValue("remark_image", capturedData.base64);
     }
   }, [capturedData]);
 
@@ -105,13 +105,10 @@ const VehiclePartCheck: FC<VehiclePartCheckProps> = ({
           {valid === false && (
             <View>
               <TextArea
-                onChange={(event: any) =>
-                  handleSetFieldValue(
-                    "remark_comment",
-                    event.currentTarget.value
-                  )
+                onChangeText={(text) =>
+                  handleSetFieldValue("remark_comment", text)
                 }
-                value={remark_comment}
+                value={remarkComment}
                 placeholder={t("inspection.remarks")}
               />
               <Button
@@ -125,7 +122,7 @@ const VehiclePartCheck: FC<VehiclePartCheckProps> = ({
                   <Text color="white" mr={2}>
                     {t(
                       `inspection.${
-                        !!remark_image ? "pictureAgain" : "proofOfMalfunction"
+                        !!remarkImage ? "pictureAgain" : "proofOfMalfunction"
                       }`
                     )}
                   </Text>
@@ -133,7 +130,7 @@ const VehiclePartCheck: FC<VehiclePartCheckProps> = ({
                     color="white"
                     as={
                       <MaterialCommunityIcons
-                        name={!!remark_image ? "camera-retake" : "camera"}
+                        name={!!remarkImage ? "camera-retake" : "camera"}
                       />
                     }
                   />
