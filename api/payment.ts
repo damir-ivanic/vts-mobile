@@ -59,7 +59,6 @@ export function useCosts(costType: string) {
     },
     {
       async onSuccess() {
-        console.log("uspelo");
         toast.show({
           status: "success",
           placement: "top",
