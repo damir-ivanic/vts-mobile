@@ -11,6 +11,7 @@ import {
   Icon,
   KeyboardAvoidingView,
   VStack,
+  ScrollView,
 } from "native-base";
 import { Keyboard, Platform, TouchableWithoutFeedback } from "react-native";
 import { useTranslation } from "react-i18next";
@@ -24,6 +25,7 @@ import { SupplierType, useSuppliers } from "../../api/supplierts";
 import useGeoLocation from "../../hooks/useGeoLocation";
 import LoadingScreen from "../../components/loading/LoadingScreen";
 import ErrorPage from "../../components/error/ErroPage";
+import { useGasStations } from "../../api/gas-stations";
 
 const FuelForm = () => {
   const { values, errors, submitForm, handleChange, setFieldValue } =
@@ -32,9 +34,11 @@ const FuelForm = () => {
   const { data: fuelType } = useFuelType();
   const { loading, lat, long } = useGeoLocation();
   const { data: suppliers } = useSuppliers();
-
+  const { data: stations } = useGasStations();
   const { capturedData, openCamera } = useCameraState();
   const { t } = useTranslation();
+
+  console.log(stations);
 
   useEffect(() => {
     if (capturedData?.base64) {
@@ -57,6 +61,7 @@ const FuelForm = () => {
 
   return (
     <KeyboardAvoidingView
+      keyboardVerticalOffset={130}
       h={{
         base: "100%",
         lg: "auto",
@@ -64,151 +69,195 @@ const FuelForm = () => {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <VStack p="5" flex="1" justifyContent="flex-end">
-          <FormControl isRequired isInvalid={"payment_type_id" in errors}>
-            <FormControl.Label>{t("general.selectItem")}</FormControl.Label>
-            {data ? (
-              <Select
-                isDisabled={isError || isLoading}
-                selectedValue={values.payment_type_id?.toString()}
-                accessibilityLabel="Nacin placanja"
-                placeholder="Nacin placanja"
-                onValueChange={(itemValue) => {
-                  setFieldValue(
-                    "payment_type_id",
-                    Number.parseInt(itemValue),
-                    false
-                  );
-                }}
-                _selectedItem={{
-                  bg: "teal.600",
-                  endIcon: <CheckIcon size={5} />,
-                }}
-                mt={1}
-              >
-                {data?.map((paymentType: any) => (
-                  <Select.Item
-                    key={paymentType.id}
-                    label={paymentType.name}
-                    value={paymentType.id.toString()}
-                  />
-                ))}
-              </Select>
-            ) : null}
-            {errors.fuel_type_id ? (
-              <FormControl.ErrorMessage>
-                {errors.fuel_type_id}.
-              </FormControl.ErrorMessage>
-            ) : null}
-          </FormControl>
-          <FormControl marginTop={5}>
-            <FormControl.Label>Vrsta goriva</FormControl.Label>
-            <Input isDisabled value={fuelType?.fuel_type} />
-          </FormControl>
+        <ScrollView flex={1}>
+          <VStack p="5" justifyContent="flex-end" space={4}>
+            <FormControl isRequired isInvalid={"payment_type_id" in errors}>
+              <FormControl.Label>{t("general.selectItem")}</FormControl.Label>
+              {data ? (
+                <Select
+                  isDisabled={isError || isLoading}
+                  selectedValue={values.payment_type_id?.toString()}
+                  accessibilityLabel="Nacin placanja"
+                  placeholder="Nacin placanja"
+                  onValueChange={(itemValue) => {
+                    setFieldValue(
+                      "payment_type_id",
+                      Number.parseInt(itemValue),
+                      false
+                    );
+                  }}
+                  _selectedItem={{
+                    bg: "teal.600",
+                    endIcon: <CheckIcon size={5} />,
+                  }}
+                  mt={1}
+                >
+                  {data?.map((paymentType: any) => (
+                    <Select.Item
+                      key={paymentType.id}
+                      label={paymentType.name}
+                      value={paymentType.id.toString()}
+                    />
+                  ))}
+                </Select>
+              ) : null}
+              {errors.fuel_type_id ? (
+                <FormControl.ErrorMessage>
+                  {errors.fuel_type_id}.
+                </FormControl.ErrorMessage>
+              ) : null}
+            </FormControl>
+            <FormControl>
+              <FormControl.Label>Vrsta goriva</FormControl.Label>
+              <Input isDisabled value={fuelType?.fuel_type} />
+            </FormControl>
 
-          <FormControl
-            isRequired
-            isInvalid={"supplier" in errors}
-            marginTop={5}
-          >
-            <FormControl.Label>Select Item</FormControl.Label>
-            {suppliers ? (
-              <Select
-                selectedValue={values.supplier?.toString()}
-                accessibilityLabel="Supplieri"
-                placeholder="Supplieri"
-                onValueChange={(itemValue) => {
-                  setFieldValue("supplier", Number.parseInt(itemValue), false);
-                }}
-                _selectedItem={{
-                  bg: "teal.600",
-                  endIcon: <CheckIcon size={5} />,
-                }}
-                mt={1}
-              >
-                {suppliers?.map((paymentType: SupplierType) => (
-                  <Select.Item
-                    key={paymentType.id}
-                    label={paymentType.name}
-                    value={paymentType.id.toString()}
-                  />
-                ))}
-              </Select>
-            ) : null}
-            {errors.fuel_type_id ? (
+            <FormControl isRequired isInvalid={"supplier" in errors}>
+              <FormControl.Label>Select Item</FormControl.Label>
+              {suppliers ? (
+                <Select
+                  selectedValue={values.supplier?.toString()}
+                  accessibilityLabel="Pumpa"
+                  placeholder="Pumpa"
+                  onValueChange={(itemValue) => {
+                    setFieldValue(
+                      "supplier",
+                      Number.parseInt(itemValue),
+                      false
+                    );
+                  }}
+                  _selectedItem={{
+                    bg: "teal.600",
+                    endIcon: <CheckIcon size={5} />,
+                  }}
+                  mt={1}
+                >
+                  {stations?.map((station) => (
+                    <Select.Item
+                      key={station.id}
+                      label={station.name}
+                      value={station.id.toString()}
+                    />
+                  ))}
+                </Select>
+              ) : null}
+              {errors.fuel_type_id ? (
+                <FormControl.ErrorMessage>
+                  {errors.fuel_type_id}.
+                </FormControl.ErrorMessage>
+              ) : null}
+            </FormControl>
+
+            <FormControl isRequired isInvalid={"supplier" in errors}>
+              <FormControl.Label>Select Item</FormControl.Label>
+              {suppliers ? (
+                <Select
+                  selectedValue={values.supplier?.toString()}
+                  accessibilityLabel="Supplieri"
+                  placeholder="Supplieri"
+                  onValueChange={(itemValue) => {
+                    setFieldValue(
+                      "supplier",
+                      Number.parseInt(itemValue),
+                      false
+                    );
+                  }}
+                  _selectedItem={{
+                    bg: "teal.600",
+                    endIcon: <CheckIcon size={5} />,
+                  }}
+                  mt={1}
+                >
+                  {suppliers?.map((paymentType: SupplierType) => (
+                    <Select.Item
+                      key={paymentType.id}
+                      label={paymentType.name}
+                      value={paymentType.id.toString()}
+                    />
+                  ))}
+                </Select>
+              ) : null}
+              {errors.fuel_type_id ? (
+                <FormControl.ErrorMessage>
+                  {errors.fuel_type_id}.
+                </FormControl.ErrorMessage>
+              ) : null}
+            </FormControl>
+            <FormControl isRequired isInvalid={"mileage" in errors}>
+              <FormControl.Label>{t("general.mileage")}</FormControl.Label>
+              <Input
+                keyboardType="number-pad"
+                placeholder="Mileage"
+                onChangeText={handleChange("mileage")}
+                value={values.mileage?.toString()}
+              />
               <FormControl.ErrorMessage>
-                {errors.fuel_type_id}.
+                {errors.mileage}
               </FormControl.ErrorMessage>
-            ) : null}
-          </FormControl>
-          <FormControl isRequired isInvalid={"mileage" in errors} marginTop={5}>
-            <FormControl.Label>{t("general.mileage")}</FormControl.Label>
-            <Input
-              keyboardType="number-pad"
-              placeholder="Mileage"
-              onChangeText={handleChange("mileage")}
-              value={values.mileage?.toString()}
-            />
-            <FormControl.ErrorMessage>
-              {errors.mileage}
-            </FormControl.ErrorMessage>
-          </FormControl>
-          <FormControl isRequired isInvalid={"litres" in errors} marginTop={5}>
-            <FormControl.Label>{t("costs.amount")}</FormControl.Label>
-            <Input
-              keyboardType="number-pad"
-              placeholder={t("costs.amount")}
-              onChangeText={handleChange("litres")}
-              value={values.litres?.toString()}
-            />
-            <FormControl.ErrorMessage>{errors.litres}</FormControl.ErrorMessage>
-          </FormControl>
-          <FormControl isRequired isInvalid={"cost" in errors} marginTop={5}>
-            <FormControl.Label>{t("costs.price")}</FormControl.Label>
-            <Input
-              keyboardType={
-                Platform.OS === "ios" ? "numbers-and-punctuation" : "number-pad"
-              }
-              placeholder={t("costs.price")}
-              onChangeText={handleChange("cost")}
-              value={values.cost?.toString()}
-            />
-            <FormControl.ErrorMessage>{errors.cost}</FormControl.ErrorMessage>
+            </FormControl>
+            <FormControl isRequired isInvalid={"litres" in errors}>
+              <FormControl.Label>{t("costs.amount")}</FormControl.Label>
+              <Input
+                keyboardType="number-pad"
+                placeholder={t("costs.amount")}
+                onChangeText={handleChange("litres")}
+                value={values.litres?.toString()}
+              />
+              <FormControl.ErrorMessage>
+                {errors.litres}
+              </FormControl.ErrorMessage>
+            </FormControl>
+            <FormControl isRequired isInvalid={"cost" in errors}>
+              <FormControl.Label>{t("costs.price")}</FormControl.Label>
+              <Input
+                keyboardType={
+                  Platform.OS === "ios"
+                    ? "numbers-and-punctuation"
+                    : "number-pad"
+                }
+                placeholder={t("costs.price")}
+                onChangeText={handleChange("cost")}
+                value={values.cost?.toString()}
+              />
+              <FormControl.ErrorMessage>{errors.cost}</FormControl.ErrorMessage>
+              <Button
+                mt={2}
+                size="sm"
+                onPress={openCamera}
+                colorScheme="vtsBlue"
+                _text={{ color: "white" }}
+              >
+                <View flexDirection="row" alignItems="center">
+                  <Text color="white" mr={2}>
+                    {t(
+                      `general.${
+                        values.image ? "retakePicture" : "takePicture"
+                      }`
+                    )}
+                  </Text>
+                  <Icon
+                    color="white"
+                    as={
+                      <MaterialCommunityIcons
+                        name={values.image ? "camera-retake" : "camera"}
+                      />
+                    }
+                  />
+                </View>
+              </Button>
+            </FormControl>
+
             <Button
-              mt={2}
-              size="sm"
-              onPress={openCamera}
+              width="100%"
+              marginTop={2}
               colorScheme="vtsBlue"
               _text={{ color: "white" }}
+              onPress={submitForm}
             >
-              <View flexDirection="row" alignItems="center">
-                <Text color="white" mr={2}>
-                  {t(
-                    `general.${values.image ? "retakePicture" : "takePicture"}`
-                  )}
-                </Text>
-                <Icon
-                  color="white"
-                  as={
-                    <MaterialCommunityIcons
-                      name={values.image ? "camera-retake" : "camera"}
-                    />
-                  }
-                />
-              </View>
+              {t("general.save")}
             </Button>
-          </FormControl>
-
-          <Button
-            width="100%"
-            marginTop={2}
-            colorScheme="vtsBlue"
-            _text={{ color: "white" }}
-            onPress={submitForm}
-          >
-            {t("general.save")}
-          </Button>
-        </VStack>
+          </VStack>
+        </ScrollView>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
   );

@@ -64,7 +64,8 @@
     "price": "Cena",
     "entryRamp": "Dodaj ulaznu rampu",
     "exitRamp": "Dodaj izlaznu rampu",
-    "successfullyAddedCoordinates": "Lokacija uspešno dodata"
+    "successfullyAddedCoordinates": "Lokacija uspešno dodata",
+    "selectCountry": "Izaberite državu"
   },
   "validations": {
     "mandatoryField": "Ovo polje je obavezno",

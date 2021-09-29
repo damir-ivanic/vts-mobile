@@ -27,8 +27,6 @@ const VignetteForm = () => {
   const { data, isError, isLoading } = usePaymentType();
   const { t } = useTranslation();
 
-  console.log(countries);
-
   useEffect(() => {
     setFieldValue("lat", lat, false);
     setFieldValue("long", long, false);
@@ -70,6 +68,37 @@ const VignetteForm = () => {
                 key={paymentType.id}
                 label={paymentType.name}
                 value={paymentType.id.toString()}
+              />
+            ))}
+          </Select>
+        ) : null}
+
+        <FormControl.ErrorMessage>
+          {errors.payment_type_id}
+        </FormControl.ErrorMessage>
+      </FormControl>
+      <FormControl isInvalid={"country_id" in errors} marginTop={5}>
+        <FormControl.Label>{t("general.selectItem")}</FormControl.Label>
+        {countries ? (
+          <Select
+            isDisabled={isError || isLoading}
+            selectedValue={values.country_id?.toString()}
+            accessibilityLabel={t("costs.selectCountry")}
+            placeholder={t("costs.selectCountry")}
+            onValueChange={(itemValue) => {
+              setFieldValue("country_id", Number.parseInt(itemValue), true);
+            }}
+            _selectedItem={{
+              bg: "teal.600",
+              endIcon: <CheckIcon size={5} />,
+            }}
+            mt={1}
+          >
+            {countries?.map((country) => (
+              <Select.Item
+                key={country.id}
+                label={country.name}
+                value={country.id.toString()}
               />
             ))}
           </Select>

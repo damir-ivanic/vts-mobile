@@ -31,6 +31,7 @@ export type TollType = {
 
 export type VignetteType = {
   payment_type_id?: number;
+  country_id?: number;
   lat?: number;
   long?: number;
   cost?: number;

@@ -44,7 +44,7 @@ const CameraStateProvider: VFC<CameraStateProviderProps> = ({ children }) => {
   const [capturedData, setCapturedData] = useState<CameraCapturedPicture>();
 
   const handleOpenCamera = useCallback(async () => {
-    Keyboard.dismiss();
+    // Keyboard.dismiss();
     try {
       const { status } = await CameraBase.requestCameraPermissionsAsync();
 
