@@ -65,7 +65,10 @@
     "entryRamp": "Dodaj ulaznu rampu",
     "exitRamp": "Dodaj izlaznu rampu",
     "successfullyAddedCoordinates": "Lokacija uspešno dodata",
-    "selectCountry": "Izaberite državu"
+    "selectCountry": "Izaberite državu",
+    "fuelType": "Vrsta goriva",
+    "fuelStation": "Benzinska pumpa",
+    "suppliers": "Dobavljači"
   },
   "validations": {
     "mandatoryField": "Ovo polje je obavezno",

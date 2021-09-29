@@ -77,16 +77,20 @@ const VignetteForm = () => {
           {errors.payment_type_id}
         </FormControl.ErrorMessage>
       </FormControl>
-      <FormControl isInvalid={"country_id" in errors} marginTop={5}>
+      <FormControl isInvalid={"vignette_country_id" in errors} marginTop={5}>
         <FormControl.Label>{t("general.selectItem")}</FormControl.Label>
         {countries ? (
           <Select
             isDisabled={isError || isLoading}
-            selectedValue={values.country_id?.toString()}
+            selectedValue={values.vignette_country_id?.toString()}
             accessibilityLabel={t("costs.selectCountry")}
             placeholder={t("costs.selectCountry")}
             onValueChange={(itemValue) => {
-              setFieldValue("country_id", Number.parseInt(itemValue), true);
+              setFieldValue(
+                "vignette_country_id",
+                Number.parseInt(itemValue),
+                true
+              );
             }}
             _selectedItem={{
               bg: "teal.600",
@@ -105,7 +109,7 @@ const VignetteForm = () => {
         ) : null}
 
         <FormControl.ErrorMessage>
-          {errors.payment_type_id}
+          {errors.vignette_country_id}
         </FormControl.ErrorMessage>
       </FormControl>
       <FormControl

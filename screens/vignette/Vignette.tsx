@@ -12,7 +12,7 @@ const initialValues = {
   long: undefined,
   cost: undefined,
   days_of_validity: undefined,
-  country_id: undefined,
+  vignette_country_id: undefined,
 };
 
 const Vignette = ({ navigation }: RootTabScreenProps<"Vignette">) => {

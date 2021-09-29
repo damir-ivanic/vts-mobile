@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginTop: "auto",
     backgroundColor: "rgba(187,187,189,0.5)",
-    marginVertical: 12,
+    marginVertical: 22,
   },
   confirmButton: {
     position: "absolute",

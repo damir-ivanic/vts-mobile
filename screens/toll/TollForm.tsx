@@ -25,10 +25,10 @@ const TollForm = () => {
 
     try {
       const location = await Location.getCurrentPositionAsync({});
-      console.log(location);
-
       setFieldValue(`${rampType}_lat`, location.coords.latitude, false);
       setFieldValue(`${rampType}_long`, location.coords.longitude, false);
+      setFieldValue(`lat`, location.coords.latitude, false);
+      setFieldValue(`long`, location.coords.longitude, false);
       setLoadingLocation(false);
     } catch (e) {
       console.log(e);

@@ -13,6 +13,8 @@ const initialValues = {
   exit_ramp_long: undefined,
   exit_ramp_lat: undefined,
   cost: undefined,
+  long: undefined,
+  lat: undefined,
 };
 
 const Toll = ({ navigation }: RootTabScreenProps<"Toll">) => {

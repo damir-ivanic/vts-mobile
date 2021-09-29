@@ -18,6 +18,7 @@ export type FuelPaymentType = {
   long?: number;
   lat?: number;
   image?: string;
+  gas_station_id?: number;
 };
 
 export type TollType = {
@@ -27,11 +28,13 @@ export type TollType = {
   exit_ramp_long?: number;
   exit_ramp_lat?: number;
   cost?: number;
+  long?: number;
+  lat?: number;
 };
 
 export type VignetteType = {
   payment_type_id?: number;
-  country_id?: number;
+  vignette_country_id?: number;
   lat?: number;
   long?: number;
   cost?: number;
@@ -56,12 +59,14 @@ export function useCosts(costType: string) {
     },
     {
       async onSuccess() {
+        console.log("uspelo");
         toast.show({
           status: "success",
           placement: "top",
         });
       },
       onError(e: AxiosError) {
+        console.log(e, "ERRORCINA");
         toast.show({
           placement: "top",
           status: "error",

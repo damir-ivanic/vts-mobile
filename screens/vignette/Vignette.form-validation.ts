@@ -5,7 +5,7 @@ export const useVignetteSchema = () => {
   const { t } = useTranslation();
   return Yup.object().shape({
     payment_type_id: Yup.number().required(t("validations.mandatoryField")),
-    country_id: Yup.number().required(t("validations.mandatoryField")),
+    vignette_country_id: Yup.number().required(t("validations.mandatoryField")),
     lat: Yup.number().required(t("validations.mandatoryButton")),
     long: Yup.number().required(t("validations.mandatoryButton")),
     cost: Yup.number().required(t("validations.mandatoryField")),

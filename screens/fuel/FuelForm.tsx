@@ -21,7 +21,7 @@ import { useCameraState } from "../../state-providers/CameraStateProvider";
 
 import { useFuelType } from "../../api/fuel";
 import { FuelPaymentType, usePaymentType } from "../../api/payment";
-import { SupplierType, useSuppliers } from "../../api/supplierts";
+import { useSuppliers } from "../../api/supplierts";
 import useGeoLocation from "../../hooks/useGeoLocation";
 import LoadingScreen from "../../components/loading/LoadingScreen";
 import ErrorPage from "../../components/error/ErroPage";
@@ -31,14 +31,12 @@ const FuelForm = () => {
   const { values, errors, submitForm, handleChange, setFieldValue } =
     useFormikContext<FuelPaymentType>();
   const { data, isError, isLoading } = usePaymentType();
-  const { data: fuelType } = useFuelType();
+  const { data: fuelType, isError: isFuelError } = useFuelType();
   const { loading, lat, long } = useGeoLocation();
-  const { data: suppliers } = useSuppliers();
-  const { data: stations } = useGasStations();
+  const { data: suppliers, isError: isSuppliersError } = useSuppliers();
+  const { data: stations, isError: isStationsError } = useGasStations();
   const { capturedData, openCamera } = useCameraState();
   const { t } = useTranslation();
-
-  console.log(stations);
 
   useEffect(() => {
     if (capturedData?.base64) {
@@ -55,7 +53,7 @@ const FuelForm = () => {
     return <LoadingScreen />;
   }
 
-  if (isError) {
+  if (isError || isSuppliersError || isStationsError || isFuelError) {
     return <ErrorPage />;
   }
 
@@ -77,8 +75,8 @@ const FuelForm = () => {
                 <Select
                   isDisabled={isError || isLoading}
                   selectedValue={values.payment_type_id?.toString()}
-                  accessibilityLabel="Nacin placanja"
-                  placeholder="Nacin placanja"
+                  accessibilityLabel={t("costs.paymentMethod")}
+                  placeholder={t("costs.paymentMethod")}
                   onValueChange={(itemValue) => {
                     setFieldValue(
                       "payment_type_id",
@@ -107,21 +105,53 @@ const FuelForm = () => {
                 </FormControl.ErrorMessage>
               ) : null}
             </FormControl>
-            <FormControl>
-              <FormControl.Label>Vrsta goriva</FormControl.Label>
-              <Input isDisabled value={fuelType?.fuel_type} />
-            </FormControl>
-
-            <FormControl isRequired isInvalid={"supplier" in errors}>
-              <FormControl.Label>Select Item</FormControl.Label>
-              {suppliers ? (
+            <FormControl isRequired isInvalid={"fuel_type_id" in errors}>
+              <FormControl.Label>{t("general.selectItem")}</FormControl.Label>
+              {fuelType ? (
                 <Select
-                  selectedValue={values.supplier?.toString()}
-                  accessibilityLabel="Pumpa"
-                  placeholder="Pumpa"
+                  isDisabled={isError || isLoading}
+                  selectedValue={values.fuel_type_id?.toString()}
+                  accessibilityLabel={t("costs.fuelType")}
+                  placeholder={t("costs.fuelType")}
                   onValueChange={(itemValue) => {
                     setFieldValue(
-                      "supplier",
+                      "fuel_type_id",
+                      Number.parseInt(itemValue),
+                      false
+                    );
+                  }}
+                  _selectedItem={{
+                    bg: "teal.600",
+                    endIcon: <CheckIcon size={5} />,
+                  }}
+                  mt={1}
+                >
+                  {fuelType?.map((paymentType: any) => (
+                    <Select.Item
+                      key={paymentType.id}
+                      label={paymentType.fuel_type}
+                      value={paymentType.id.toString()}
+                    />
+                  ))}
+                </Select>
+              ) : null}
+              {errors.fuel_type_id ? (
+                <FormControl.ErrorMessage>
+                  {errors.fuel_type_id}.
+                </FormControl.ErrorMessage>
+              ) : null}
+            </FormControl>
+            <FormControl isRequired isInvalid={"gas_station_id" in errors}>
+              <FormControl.Label>{t("general.selectItem")}</FormControl.Label>
+              {stations ? (
+                <Select
+                  isDisabled={isError || isLoading}
+                  selectedValue={values.gas_station_id?.toString()}
+                  accessibilityLabel={t("costs.fuelStation")}
+                  placeholder={t("costs.fuelStation")}
+                  onValueChange={(itemValue) => {
+                    setFieldValue(
+                      "gas_station_id",
                       Number.parseInt(itemValue),
                       false
                     );
@@ -141,20 +171,19 @@ const FuelForm = () => {
                   ))}
                 </Select>
               ) : null}
-              {errors.fuel_type_id ? (
+              {errors.gas_station_id ? (
                 <FormControl.ErrorMessage>
-                  {errors.fuel_type_id}.
+                  {errors.gas_station_id}.
                 </FormControl.ErrorMessage>
               ) : null}
             </FormControl>
-
-            <FormControl isRequired isInvalid={"supplier" in errors}>
-              <FormControl.Label>Select Item</FormControl.Label>
-              {suppliers ? (
+            {suppliers && values.payment_type_id === 2 ? (
+              <FormControl isRequired isInvalid={"supplier" in errors}>
+                <FormControl.Label>{t("general.selectItem")}</FormControl.Label>
                 <Select
                   selectedValue={values.supplier?.toString()}
-                  accessibilityLabel="Supplieri"
-                  placeholder="Supplieri"
+                  accessibilityLabel={t("costs.suppliers")}
+                  placeholder={t("costs.suppliers")}
                   onValueChange={(itemValue) => {
                     setFieldValue(
                       "supplier",
@@ -168,26 +197,28 @@ const FuelForm = () => {
                   }}
                   mt={1}
                 >
-                  {suppliers?.map((paymentType: SupplierType) => (
+                  {suppliers?.map((station) => (
                     <Select.Item
-                      key={paymentType.id}
-                      label={paymentType.name}
-                      value={paymentType.id.toString()}
+                      key={station.id}
+                      label={station.name}
+                      value={station.id.toString()}
                     />
                   ))}
                 </Select>
-              ) : null}
-              {errors.fuel_type_id ? (
-                <FormControl.ErrorMessage>
-                  {errors.fuel_type_id}.
-                </FormControl.ErrorMessage>
-              ) : null}
-            </FormControl>
+
+                {errors.supplier ? (
+                  <FormControl.ErrorMessage>
+                    {errors.supplier}.
+                  </FormControl.ErrorMessage>
+                ) : null}
+              </FormControl>
+            ) : null}
+
             <FormControl isRequired isInvalid={"mileage" in errors}>
               <FormControl.Label>{t("general.mileage")}</FormControl.Label>
               <Input
                 keyboardType="number-pad"
-                placeholder="Mileage"
+                placeholder={t("general.mileage")}
                 onChangeText={handleChange("mileage")}
                 value={values.mileage?.toString()}
               />
@@ -220,6 +251,8 @@ const FuelForm = () => {
                 value={values.cost?.toString()}
               />
               <FormControl.ErrorMessage>{errors.cost}</FormControl.ErrorMessage>
+            </FormControl>
+            <FormControl isRequired isInvalid={"image" in errors}>
               <Button
                 mt={2}
                 size="sm"
@@ -245,6 +278,7 @@ const FuelForm = () => {
                   />
                 </View>
               </Button>
+              <FormControl.ErrorMessage>{errors.cost}</FormControl.ErrorMessage>
             </FormControl>
 
             <Button
