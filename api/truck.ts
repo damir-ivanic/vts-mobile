@@ -34,9 +34,11 @@ export function useTruck() {
   });
 }
 
-export function useTrailer() {
+export function useTrailer(id: number) {
   return useQuery("trailer", async () => {
-    const { data } = await request.get<Trailer>(`trailer`);
+    const { data } = await request.post<Trailer>(`trailer`, {
+      warrant_id: id,
+    });
     return data.data!;
   });
 }

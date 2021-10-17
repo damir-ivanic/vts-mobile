@@ -27,15 +27,30 @@ export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
 
 export type RootTabParamList = {
   LoginScreen: undefined;
-  MainMenu: undefined;
-  Fuel: undefined;
-  Toll: undefined;
-  Vignette: undefined;
-  Load: undefined;
+  MainMenu: {
+    id: number;
+  };
+  Fuel: {
+    id: number;
+  };
+  Toll: {
+    id: number;
+  };
+  Vignette: {
+    id: number;
+  };
+  Load: {
+    id: number;
+  };
   TruckDetails: undefined;
-  TrailerDetails: undefined;
-  Inspection: undefined;
-  Start: undefined;
+  TrailerDetails: {
+    id: number;
+  };
+  Inspection: { id: number };
+  Start: { id: number };
+  Warrants: undefined;
+  Settings: undefined;
+  Warrant: undefined;
 };
 
 export type RootTabScreenProps<Screen extends keyof RootTabParamList> =

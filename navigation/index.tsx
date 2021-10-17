@@ -13,6 +13,11 @@ import Inspection from "../screens/inspection/Inspection";
 import { useTranslation } from "react-i18next";
 import Start from "../screens/start/Start";
 import LoadingScreen from "../components/loading/LoadingScreen";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import Warrants from "../screens/warrants/Warrants";
+import Settings from "../screens/settings/Settings";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import WarrantStack from "./WarrantStack";
 
 export default function Navigation() {
   return (
@@ -22,71 +27,8 @@ export default function Navigation() {
   );
 }
 
-const login = {
-  name: "LoginScreen",
-  component: LoginScreen,
-  header: "login",
-  backButton: false,
-};
-
-const inspection = [
-  {
-    name: "TruckDetails",
-    component: TruckDetails,
-    header: "truckDetails",
-    backButton: false,
-  },
-  {
-    name: "TrailerDetails",
-    component: TrailerDetails,
-    header: "trailerDetails",
-    backButton: false,
-  },
-  {
-    name: "Inspection",
-    component: Inspection,
-    header: "inspection",
-    backButton: false,
-  },
-  {
-    name: "Start",
-    component: Start,
-    header: "start",
-    backButton: false,
-  },
-];
-
-const routes = [
-  {
-    name: "MainMenu",
-    component: MainMenu,
-    header: "mainMenu",
-    backButton: false,
-  },
-  {
-    name: "Fuel",
-    component: Fuel,
-    header: "fuel",
-    backButton: true,
-  },
-  {
-    name: "Toll",
-    component: Toll,
-    header: "toll",
-    backButton: true,
-  },
-  {
-    name: "Vignette",
-    component: Vignette,
-    header: "vignette",
-    backButton: true,
-  },
-];
-
-const inspectionRoutes = [...inspection, ...routes];
-const authROutes = [login];
-
 const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
 function RootNavigator() {
   const { state } = useAuthentication();
@@ -99,43 +41,49 @@ function RootNavigator() {
       </Stack.Navigator>
     );
   }
-  return (
+  return !state.token ? (
     <Stack.Navigator
       screenOptions={{ contentStyle: { backgroundColor: "white" } }}
     >
-      {state.token
-        ? state.activeTravelWarrant
-          ? routes.map((route) => (
-              <Stack.Screen
-                key={route.name}
-                name={route.name}
-                component={route.component}
-                options={{
-                  title: t(`screens.${route.header}`),
-                }}
-              />
-            ))
-          : inspectionRoutes.map((route) => (
-              <Stack.Screen
-                key={route.name}
-                name={route.name}
-                component={route.component}
-                options={{
-                  title: t(`screens.${route.header}`),
-                  headerBackVisible: route.backButton,
-                }}
-              />
-            ))
-        : authROutes.map((route) => (
-            <Stack.Screen
-              key={route.name}
-              name={route.name}
-              component={route.component}
-              options={{
-                title: t(`screens.${route.header}`),
-              }}
-            />
-          ))}
+      <Stack.Screen
+        name="LoginScreen"
+        component={LoginScreen}
+        options={{
+          title: t(`screens.login`),
+        }}
+      />
     </Stack.Navigator>
+  ) : (
+    <Tab.Navigator>
+      <Tab.Screen
+        name={t(`screens.home`)}
+        component={TruckDetails}
+        options={{
+          tabBarIcon: ({ color, size }) => {
+            return <Ionicons name="home" size={size} color={color} />;
+          },
+          title: t(`screens.home`),
+        }}
+      />
+      <Tab.Screen
+        name={t(`screens.warrants`)}
+        component={WarrantStack}
+        options={{
+          tabBarIcon: ({ color, size }) => {
+            return <Ionicons name="copy" size={size} color={color} />;
+          },
+          headerShown: false,
+        }}
+      />
+      <Tab.Screen
+        name={t(`screens.settings`)}
+        component={Settings}
+        options={{
+          tabBarIcon: ({ color, size }) => {
+            return <Ionicons name="settings" size={size} color={color} />;
+          },
+        }}
+      />
+    </Tab.Navigator>
   );
 }

@@ -1,7 +1,7 @@
 import React, { useContext, ReactNode, createContext, useEffect } from "react";
 import { useImmer } from "use-immer";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { setTokenHeader } from "../api/api";
+import { setTokenHeader, clearTokenHeader } from "../api/api";
 import { checkForActiveWarrant } from "../api/check";
 
 type AuthState = {
@@ -19,6 +19,7 @@ const initialState: AuthState = {
 type AuthContextValue = {
   state: AuthState;
   setToken: (token: string) => void;
+  logOut: () => void;
 };
 
 const AuthenticationContext = createContext<AuthContextValue>(
@@ -64,9 +65,18 @@ export function AuthenticationProvider({ children }: { children: ReactNode }) {
     });
   };
 
+  const logOut = async () => {
+    clearTokenHeader();
+    await AsyncStorage.removeItem("token");
+    updateState((draft) => {
+      draft.token = null;
+    });
+  };
+
   const context = {
     state,
     setToken,
+    logOut,
   };
 
   return (

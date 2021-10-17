@@ -1,4 +1,4 @@
-import { Text, Heading, Button, Box } from "native-base";
+import { Text, Heading, Box } from "native-base";
 import * as React from "react";
 import { useTranslation } from "react-i18next";
 import { Image, Dimensions } from "react-native";
@@ -6,17 +6,10 @@ import { useTruck } from "../../api/truck";
 import Container from "../../components/container/Container";
 import ErrorPage from "../../components/error/ErroPage";
 import LoadingScreen from "../../components/loading/LoadingScreen";
-import { RootTabScreenProps } from "../../types";
 
-export default function TruckDetails({
-  navigation,
-}: RootTabScreenProps<"TruckDetails">) {
-  const { data, isLoading, isError, error } = useTruck();
+export default function TruckDetails() {
+  const { data, isLoading, isError } = useTruck();
   const { t } = useTranslation();
-
-  const confirm = () => {
-    navigation.navigate("TrailerDetails");
-  };
 
   if (isLoading) {
     return <LoadingScreen />;
@@ -67,15 +60,6 @@ export default function TruckDetails({
           {t("details.lastService")}: {data?.service_mileage} km.
         </Text>
       </Box>
-
-      <Button
-        colorScheme="vtsBlue"
-        _text={{ color: "white" }}
-        onPress={confirm}
-        mt={5}
-      >
-        {t("general.next")}
-      </Button>
     </Container>
   );
 }

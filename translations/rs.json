@@ -9,7 +9,8 @@
     "retakePicture": "Slikaj ponovo",
     "addLocation": "Dodaj lokaciju",
     "selectItem": "Izaberite opciju",
-    "mileage": "Kilometraža"
+    "mileage": "Kilometraža",
+    "logOut": "Izloguj se"
   },
   "login": {
     "plates": "Unesite registarski broj vozila",
@@ -24,7 +25,10 @@
     "fuel": "Gorivo",
     "inspection": "Inspekcija",
     "vignette": "Vinjeta",
-    "start": "Započnite nalog"
+    "start": "Započnite nalog",
+    "warrants": "Nalozi",
+    "settings": "Podešavanja",
+    "home": "Početna"
   },
   "details": {
     "vehicleInfo": "Informacije o vozilu",

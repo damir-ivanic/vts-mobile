@@ -8,21 +8,27 @@ import ErrorPage from "../../components/error/ErroPage";
 import LoadingScreen from "../../components/loading/LoadingScreen";
 import { RootTabScreenProps } from "../../types";
 
+type RouteProps = {
+  id: number;
+};
+
 export default function TrailerDetails({
+  route,
   navigation,
 }: RootTabScreenProps<"TrailerDetails">) {
-  const { data, isLoading, isError, error } = useTrailer();
   const { t } = useTranslation();
+  const { id } = route.params;
+  const { data, isLoading, isError } = useTrailer(id);
 
   const confirm = () => {
-    navigation.navigate("Inspection");
+    navigation.navigate("TrailerDetails", {
+      id: id,
+    });
   };
 
   if (isLoading) {
     return <LoadingScreen />;
   }
-
-
 
   if (isError) {
     return <ErrorPage />;
