@@ -1,6 +1,6 @@
 import React from "react";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-import { Button, Icon, Text } from "native-base";
+import { Box, Icon, Link, Text, View } from "native-base";
 import { useTranslation } from "react-i18next";
 
 const MenuCard = ({ navigation, icon, route, text }: any) => {
@@ -10,21 +10,30 @@ const MenuCard = ({ navigation, icon, route, text }: any) => {
   };
 
   return (
-    <Button
-      onPress={handleClick}
-      colorScheme="vtsBlue"
-      _text={{ color: "white" }}
-      borderRadius={10}
-      display="flex"
-      padding={15}
-      margin={15}
-      width="95%"
-      justifyContent="center"
-      alignItems="center"
-      startIcon={<Icon as={MaterialCommunityIcons} name={icon} />}
-    >
-      <Text color="white">{t(`mainMenu.${text}`)}</Text>
-    </Button>
+    <Link onPress={handleClick}>
+      <Box
+        width="96%"
+        flexDirection="row"
+        alignItems="center"
+        marginX="2%"
+        marginTop={2}
+        padding={2}
+        rounded="lg"
+        overflow="hidden"
+        borderColor="coolGray.200"
+        borderWidth={1}
+        _web={{
+          shadow: 2,
+          borderWidth: 0,
+        }}
+        _light={{
+          backgroundColor: "gray.50",
+        }}
+      >
+        <Icon as={MaterialCommunityIcons} name={icon} />
+        <Text marginLeft={2}>{t(`mainMenu.${text}`)}</Text>
+      </Box>
+    </Link>
   );
 };
 

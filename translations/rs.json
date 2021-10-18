@@ -10,7 +10,9 @@
     "addLocation": "Dodaj lokaciju",
     "selectItem": "Izaberite opciju",
     "mileage": "Kilometraža",
-    "logOut": "Izloguj se"
+    "logOut": "Izloguj se",
+    "client": "Klijent",
+    "street": "Ulica"
   },
   "login": {
     "plates": "Unesite registarski broj vozila",
@@ -28,7 +30,11 @@
     "start": "Započnite nalog",
     "warrants": "Nalozi",
     "settings": "Podešavanja",
-    "home": "Početna"
+    "home": "Početna",
+    "stop": "Stajanje",
+    "loadingList": "Utovarna lista",
+    "unloadingList": "Istovarna lista",
+    "customs": "Carina"
   },
   "details": {
     "vehicleInfo": "Informacije o vozilu",
@@ -60,7 +66,11 @@
   "mainMenu": {
     "fuel": "Gorivo",
     "toll": "Putarina",
-    "vignette": "Vinjeta"
+    "vignette": "Vinjeta",
+    "truckLoading": "Utovarna mesta",
+    "truckUnloading": "Istovarna mesta",
+    "stop": "Stajanje",
+    "customs": "Carina"
   },
   "costs": {
     "paymentMethod": "Način plaćanja",

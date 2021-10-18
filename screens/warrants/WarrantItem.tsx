@@ -1,8 +1,9 @@
 import { Ionicons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Text, Box, View, Link } from "native-base";
 import React from "react";
-import { DriverParser, Warrant } from "../../api/warrants";
-import { RootTabScreenProps } from "../../types";
+import { useTranslation } from "react-i18next";
+import { Warrant } from "../../api/warrants";
 
 type Props = {
   warrant: Warrant;
@@ -10,13 +11,12 @@ type Props = {
 };
 
 const WarrantItem = ({ warrant, navigation }: Props) => {
-  const driver = JSON.parse(warrant.driver_info) as DriverParser;
-
   const active = Boolean(warrant.warrant_start_time);
+  const { t } = useTranslation();
 
-  console.log(active);
+  console.log(warrant);
 
-  const onPress = () => {
+  const onPress = async () => {
     if (active) {
       navigation.push("MainMenu", {
         id: warrant.id,
@@ -26,6 +26,7 @@ const WarrantItem = ({ warrant, navigation }: Props) => {
         id: warrant.id,
       });
     }
+    await AsyncStorage.setItem("activeWarrant", warrant.id.toString());
   };
 
   return (
@@ -51,12 +52,16 @@ const WarrantItem = ({ warrant, navigation }: Props) => {
       >
         <Box>
           <View flexDirection="row" alignItems="center">
-            <Ionicons name="copy" size={25} color="#4e73df" />
-            <Text marginLeft={2}>
-              {driver.first_name} {driver.last_name}
-            </Text>
+            <Ionicons
+              name="copy"
+              size={25}
+              color={active ? "#4e73df" : "coolGray.200"}
+            />
+            <Text marginLeft={2}>{warrant.date}</Text>
           </View>
-          <Text>JOŠ podataka</Text>
+          <Text>
+            {t("general.client")}: {warrant.client}
+          </Text>
         </Box>
       </Box>
     </Link>
