@@ -70,7 +70,6 @@ export function useCosts(costType: string) {
         });
       },
       onError(e: AxiosError) {
-        console.log(e, "ERRORCINA");
         toast.show({
           placement: "top",
           status: "error",

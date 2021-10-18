@@ -1,10 +1,10 @@
 import React from "react";
-import { ActivityIndicator, View } from "react-native";
-import tw from "../../helpers/tailwind";
+import { ActivityIndicator } from "react-native";
+import { View } from "native-base";
 
 const LoadingScreen = () => {
   return (
-    <View style={tw`h-full items-center justify-center`}>
+    <View display="flex" flex="1" justifyContent="center" alignItems="center">
       <ActivityIndicator />
     </View>
   );

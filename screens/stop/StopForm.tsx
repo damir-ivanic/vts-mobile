@@ -15,12 +15,10 @@ const StopForm = () => {
   const { data, isError, isLoading } = useStopReasons();
   const { t } = useTranslation();
 
-  console.log(errors, lat, long);
-
   useEffect(() => {
     setFieldValue("lat", lat, false);
     setFieldValue("long", long, false);
-  }, [lat, long]);
+  }, [lat, long, isLoading]);
 
   const addStartTime = () => {
     setFieldValue("start", format(new Date(), "yyyy-MM-dd hh:mm"), false);
@@ -98,6 +96,7 @@ const StopForm = () => {
           <Button
             width="100%"
             marginTop={2}
+            disabled={!Boolean(values.start)}
             onPress={addEndTime}
             colorScheme="vtsGreen"
             _text={{ color: "white" }}

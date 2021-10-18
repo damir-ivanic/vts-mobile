@@ -109,6 +109,7 @@ const WarrantStack = () => {
           component={route.component}
           options={{
             title: t(`screens.${route.header}`),
+            headerBackVisible: route.backButton,
           }}
         />
       ))}

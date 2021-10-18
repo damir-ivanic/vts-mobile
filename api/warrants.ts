@@ -8,6 +8,7 @@ export type Warrant = {
   driver_info: string;
   warrant_start_time: Date | null;
   client: string;
+  warrant_status: "open" | "active" | "finalized";
 };
 
 export function useWarrants() {

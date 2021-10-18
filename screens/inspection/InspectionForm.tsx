@@ -14,8 +14,15 @@ const InspectionForm = () => {
 
   const { capturedData, openCamera } = useCameraState();
 
-  const { values, isSubmitting, submitForm, setFieldValue, isValid, dirty } =
-    useFormikContext<InspectionFormValues>();
+  const {
+    values,
+    isSubmitting,
+    submitForm,
+    setFieldValue,
+    isValid,
+    dirty,
+    errors,
+  } = useFormikContext<InspectionFormValues>();
 
   const [activeStep, setActiveStep] = useState<InspectionStep>();
 

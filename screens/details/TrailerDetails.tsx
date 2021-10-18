@@ -21,7 +21,7 @@ export default function TrailerDetails({
   const { data, isLoading, isError } = useTrailer(id);
 
   const confirm = () => {
-    navigation.navigate("TrailerDetails", {
+    navigation.navigate("Inspection", {
       id: id,
     });
   };

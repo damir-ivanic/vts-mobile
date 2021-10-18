@@ -30,9 +30,7 @@ const TollForm = () => {
       setFieldValue(`lat`, location.coords.latitude, false);
       setFieldValue(`long`, location.coords.longitude, false);
       setLoadingLocation(false);
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
   };
 
   return (

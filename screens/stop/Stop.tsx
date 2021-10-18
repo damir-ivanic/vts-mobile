@@ -29,7 +29,6 @@ const Stop = ({ navigation, route }: RootTabScreenProps<"Stop">) => {
     }
   }, [isSuccess]);
 
-  console.log(id);
   return (
     <Container>
       <Formik

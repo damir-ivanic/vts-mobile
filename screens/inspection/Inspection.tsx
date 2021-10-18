@@ -9,15 +9,19 @@ import { InspectionFormValues } from "./Inspection.types";
 import { RootTabScreenProps } from "../../types";
 import Container from "../../components/container/Container";
 
-const Inspection = ({ navigation }: RootTabScreenProps<"Inspection">) => {
+const Inspection = ({
+  navigation,
+  route,
+}: RootTabScreenProps<"Inspection">) => {
+  const { id } = route.params;
   const handleSubmit = async (
     values: InspectionFormValues,
-    { setSubmitting }: FormikHelpers<InspectionFormValues>
+    { setSubmitting }: FormikHelpers<any>
   ) => {
     try {
       const { status } = await request.post("/inspection", values);
       if (status === 200) {
-        navigation.navigate("Start");
+        navigation.navigate("Start", { id: id });
       }
     } catch (error) {
       setSubmitting(false);
@@ -29,7 +33,7 @@ const Inspection = ({ navigation }: RootTabScreenProps<"Inspection">) => {
     <Container>
       <Formik
         onSubmit={handleSubmit}
-        initialValues={initialValues}
+        initialValues={{ warrant_id: { id: id }, ...initialValues }}
         validationSchema={inspectionSchema}
       >
         <InspectionForm />

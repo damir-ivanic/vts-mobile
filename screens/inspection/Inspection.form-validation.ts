@@ -1,4 +1,5 @@
 import * as Yup from "yup";
+import { number } from "yup/lib/locale";
 
 // @TODO: Figure out better error naming
 
@@ -19,6 +20,9 @@ const vehiclePartSchema = () =>
   });
 
 export const inspectionSchema = Yup.object().shape({
+  warrant_id: Yup.object().shape({
+    id: Yup.number().required(),
+  }),
   tires: vehiclePartSchema(),
   electricity_lights: vehiclePartSchema(),
   mirrors: vehiclePartSchema(),

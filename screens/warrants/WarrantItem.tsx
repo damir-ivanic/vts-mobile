@@ -11,7 +11,7 @@ type Props = {
 };
 
 const WarrantItem = ({ warrant, navigation }: Props) => {
-  const active = Boolean(warrant.warrant_start_time);
+  const active = Boolean(warrant.warrant_status === "active");
   const { t } = useTranslation();
 
   const onPress = async () => {
