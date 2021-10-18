@@ -17,12 +17,13 @@ const initialValues = {
   lat: undefined,
 };
 
-const Toll = ({ navigation }: RootTabScreenProps<"Toll">) => {
+const Toll = ({ navigation, route }: RootTabScreenProps<"Toll">) => {
   const { mutate } = useCosts("2");
+  const { id } = route.params;
 
   const handleSubmit = (value: TollType) => {
     mutate(value);
-    navigation.navigate("MainMenu");
+    navigation.navigate("MainMenu", { id: id });
   };
   return (
     <Container>

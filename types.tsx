@@ -9,6 +9,7 @@ import {
   NavigatorScreenParams,
 } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { Customs } from "./api/customs";
 
 declare global {
   namespace ReactNavigation {
@@ -51,6 +52,13 @@ export type RootTabParamList = {
   Warrants: undefined;
   Settings: undefined;
   Warrant: undefined;
+  Customs: undefined;
+  CustomsView: {
+    customs: Customs;
+  };
+  Stop: {
+    id: number;
+  };
 };
 
 export type RootTabScreenProps<Screen extends keyof RootTabParamList> =

@@ -1,4 +1,3 @@
-import { Box } from "native-base";
 import React from "react";
 import { VirtualizedList } from "react-native";
 import { RootTabScreenProps } from "../../types";
@@ -33,7 +32,8 @@ const getItem = (data: MenuItem[], index: number) => data[index];
 
 const getItemCount = () => menuItems.length;
 
-const MainMenu = ({ navigation }: RootTabScreenProps<"MainMenu">) => {
+const MainMenu = ({ navigation, route }: RootTabScreenProps<"MainMenu">) => {
+  const { id } = route.params;
   return (
     <VirtualizedList
       data={menuItems}
@@ -45,6 +45,7 @@ const MainMenu = ({ navigation }: RootTabScreenProps<"MainMenu">) => {
           route={item.route}
           text={item.text}
           navigation={navigation}
+          warrantId={id}
         />
       )}
       keyExtractor={(item) => item.icon}

@@ -1,6 +1,7 @@
 import { AxiosError } from "axios";
 import { useToast } from "native-base";
 import { useMutation, useQuery } from "react-query";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { request } from "./api";
 
 type PaymentType = {
@@ -54,8 +55,12 @@ export function useCosts(costType: string) {
   const toast = useToast();
 
   return useMutation(
-    (costForm: CostType) => {
-      return request.post<CostType>(`costs/add/${costType}`, costForm);
+    async (costForm: CostType) => {
+      const activeWarrant = await AsyncStorage.getItem("activeWarrant");
+      return request.post<CostType>(`costs/add/${costType}`, {
+        warrant_id: activeWarrant,
+        ...costForm,
+      });
     },
     {
       async onSuccess() {

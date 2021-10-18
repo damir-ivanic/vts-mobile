@@ -2,6 +2,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import Customs from "../screens/customs/Customs";
+import CustomsView from "../screens/customs/CustomsView";
 import TrailerDetails from "../screens/details/TrailerDetails";
 import Fuel from "../screens/fuel/Fuel";
 import Inspection from "../screens/inspection";
@@ -86,6 +87,12 @@ const routes = [
   {
     name: "Customs",
     component: Customs,
+    header: "customs",
+    backButton: true,
+  },
+  {
+    name: "CustomsView",
+    component: CustomsView,
     header: "customs",
     backButton: true,
   },

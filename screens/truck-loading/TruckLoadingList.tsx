@@ -11,8 +11,6 @@ const TruckLoadingList = ({ navigation }: any) => {
 
   const getItemCount = () => data!.length;
 
-  console.log(data, "DATA");
-
   if (isError) {
     return <ErrorPage />;
   }

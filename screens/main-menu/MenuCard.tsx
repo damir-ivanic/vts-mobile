@@ -3,10 +3,12 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { Box, Icon, Link, Text, View } from "native-base";
 import { useTranslation } from "react-i18next";
 
-const MenuCard = ({ navigation, icon, route, text }: any) => {
+const MenuCard = ({ navigation, icon, route, text, warrantId }: any) => {
   const { t } = useTranslation();
   const handleClick = () => {
-    navigation.navigate(route);
+    navigation.navigate(route, {
+      id: warrantId,
+    });
   };
 
   return (

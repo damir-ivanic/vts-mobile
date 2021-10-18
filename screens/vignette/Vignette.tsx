@@ -15,12 +15,13 @@ const initialValues = {
   vignette_country_id: undefined,
 };
 
-const Vignette = ({ navigation }: RootTabScreenProps<"Vignette">) => {
+const Vignette = ({ navigation, route }: RootTabScreenProps<"Vignette">) => {
   const { mutate } = useCosts("12");
+  const { id } = route.params;
 
   const handleSubmit = (value: VignetteType) => {
     mutate(value);
-    navigation.navigate("MainMenu");
+    navigation.navigate("MainMenu", { id: id });
   };
 
   return (

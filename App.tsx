@@ -9,7 +9,7 @@ import { AuthenticationProvider } from "./hooks/useAuthentication";
 import CameraStateProvider from "./state-providers/CameraStateProvider";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
-const queryClient = new QueryClient({
+export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       refetchOnWindowFocus: false,

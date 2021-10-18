@@ -18,14 +18,15 @@ const initialValues = {
   image: undefined,
 };
 
-const Fuel = ({ navigation }: RootTabScreenProps<"Fuel">) => {
+const Fuel = ({ navigation, route }: RootTabScreenProps<"Fuel">) => {
+  const { id } = route.params;
   const { mutate, status } = useCosts("1");
 
   const handleSubmit = (value: FuelPaymentType) => {
     mutate(value);
 
     if (status === "success" || status === "idle") {
-      navigation.navigate("MainMenu");
+      navigation.navigate("MainMenu", { id: id });
     }
   };
 

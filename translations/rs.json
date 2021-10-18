@@ -12,7 +12,9 @@
     "mileage": "Kilometraža",
     "logOut": "Izloguj se",
     "client": "Klijent",
-    "street": "Ulica"
+    "street": "Ulica",
+    "terminal": "Terminal",
+    "agent": "Špediter"
   },
   "login": {
     "plates": "Unesite registarski broj vozila",
@@ -87,6 +89,15 @@
   "validations": {
     "mandatoryField": "Ovo polje je obavezno",
     "mandatoryButton": "Ova akcija je obavezna"
+  },
+  "customs": {
+    "start": "Vreme dolaska",
+    "end": "Vreme odlaska"
+  },
+  "stop": {
+    "stopReason": "Izaberite razlog stajanja",
+    "start": "Početak stajanja",
+    "end": "Kraj stajanja"
   },
   "errorPage": {
     "explanation": "Došlo je do greške, povucite ekran ka dole da osvežite stranicu."

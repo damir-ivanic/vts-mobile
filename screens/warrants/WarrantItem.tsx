@@ -14,8 +14,6 @@ const WarrantItem = ({ warrant, navigation }: Props) => {
   const active = Boolean(warrant.warrant_start_time);
   const { t } = useTranslation();
 
-  console.log(warrant);
-
   const onPress = async () => {
     if (active) {
       navigation.push("MainMenu", {
