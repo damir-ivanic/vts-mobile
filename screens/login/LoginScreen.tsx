@@ -1,6 +1,5 @@
 import React from "react";
 import { Formik } from "formik";
-import { RootTabScreenProps } from "../../types";
 import { loginSchema } from "./LoginScreen.schema";
 import { useLogin } from "../../api/authentication";
 import LoadingScreen from "../../components/loading/LoadingScreen";

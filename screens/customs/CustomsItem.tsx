@@ -29,7 +29,7 @@ const CustomsItem = ({ customs, navigation }: Props) => {
         padding={2}
         rounded="lg"
         overflow="hidden"
-        borderColor={customs.end_time ? "#16a06e" : "coolGray.200"}
+        borderColor={customs.end_time ? "#16a06e" : "gray"}
         borderWidth={1}
         _web={{
           shadow: 2,

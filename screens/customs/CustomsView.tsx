@@ -44,7 +44,7 @@ const CustomsView = ({
       padding={2}
       rounded="lg"
       overflow="hidden"
-      borderColor="coolGray.200"
+      borderColor="gray"
       borderWidth={1}
       _web={{
         shadow: 2,

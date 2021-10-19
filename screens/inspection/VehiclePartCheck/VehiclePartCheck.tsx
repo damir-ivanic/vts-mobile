@@ -28,7 +28,11 @@ const VehiclePartCheck: FC<VehiclePartCheckProps> = ({
 }) => {
   const { t } = useTranslation();
 
-  const { valid, remark_comment: remarkComment, remark_image: remarkImage } = selectedValues;
+  const {
+    valid,
+    remark_comment: remarkComment,
+    remark_image: remarkImage,
+  } = selectedValues;
 
   const [isSectionOpen, toggleSection] = useToggle();
 

@@ -38,7 +38,7 @@ const WarrantItem = ({ warrant, navigation }: Props) => {
         padding={2}
         rounded="lg"
         overflow="hidden"
-        borderColor={active ? "vtsGreen.500" : "coolGray.200"}
+        borderColor={active ? "vtsGreen.500" : "gray"}
         borderWidth={1}
         _web={{
           shadow: 2,
@@ -53,7 +53,7 @@ const WarrantItem = ({ warrant, navigation }: Props) => {
             <Ionicons
               name="copy"
               size={25}
-              color={active ? "#4e73df" : "coolGray.200"}
+              color={active ? "#4e73df" : "#4e73df"}
             />
             <Text marginLeft={2}>{warrant.date}</Text>
           </View>

@@ -3,20 +3,12 @@ import React from "react";
 import "./i18n";
 import useCachedResources from "./hooks/useCachedResources";
 import Navigation from "./navigation";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClientProvider } from "react-query";
 import { extendTheme, NativeBaseProvider } from "native-base";
 import { AuthenticationProvider } from "./hooks/useAuthentication";
 import CameraStateProvider from "./state-providers/CameraStateProvider";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-
-export const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchOnWindowFocus: false,
-      staleTime: 2000,
-    },
-  },
-});
+import { queryClient } from "./helpers/queryClient";
 
 const theme = extendTheme({
   colors: {

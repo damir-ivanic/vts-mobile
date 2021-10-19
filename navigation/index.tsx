@@ -8,8 +8,8 @@ import { useTranslation } from "react-i18next";
 import LoadingScreen from "../components/loading/LoadingScreen";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Settings from "../screens/settings/Settings";
-import Ionicons from "react-native-vector-icons/Ionicons";
 import WarrantStack from "./WarrantStack";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function Navigation() {
   return (

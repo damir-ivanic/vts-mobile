@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useQuery, useMutation } from "react-query";
-import { queryClient } from "../App";
+import { queryClient } from "../helpers/queryClient";
 import { request } from "./api";
 
 export type Customs = {

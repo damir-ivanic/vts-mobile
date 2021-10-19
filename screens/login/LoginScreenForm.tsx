@@ -3,7 +3,7 @@ import { Button, Image, Input } from "native-base";
 import { FormControl } from "native-base";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import logo from "../../assets/images/viatrucker-logo.jpg";
+// import logo from "../../assets/images/viatrucker-logo.jpg";
 
 const LoginScreenForm = () => {
   const { t } = useTranslation();
@@ -20,7 +20,7 @@ const LoginScreenForm = () => {
   };
   return (
     <>
-      <Image height={150} alt="via-trucker logo" source={logo} />
+      {/* <Image height={150} alt="via-trucker logo" source={logo} /> */}
       <FormControl isRequired marginTop={5}>
         <Input
           onBlur={handleBlur("registration_number")}
